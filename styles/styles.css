@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  background-size: cover;
+}
+
+.header-wrapper {
+  height: 135px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grid-wrapper {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+}
+img {
+  height: 500px;
+}
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  height: 580px;
+  width: 580px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.grid div {
+  border: 2px solid lightgray;
+  height: 10%;
+  width: 10%;
+}
+.speedoSteve {
+  background-image: url("../images/speedoSteve.png");
+  background-size: contain;
+}
+.raptor {
+  background-image: url("../images/bouncer-raptor.png");
+  background-size: contain;
+}
+.explorer {
+  background-image: url("../images/Explorer.png");
+  background-size: contain;
+}
