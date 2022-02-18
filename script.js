@@ -3,6 +3,10 @@ const width = 10;
 const gridCellCount = width * width;
 const cells = [];
 let pete = 0;
+const trees = [
+  7, 17, 27, 37, 36, 35, 33, 43, 42, 20, 21, 13, 14, 59, 58, 57, 66, 76, 77, 89,
+  64, 74, 83, 62, 71, 61, 87,
+];
 
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
@@ -14,16 +18,17 @@ function createGrid() {
 }
 createGrid();
 
+// *** ADD TREES **
 function addTrees() {
-  const trees = [
-    7, 17, 27, 37, 36, 35, 33, 43, 42, 20, 21, 13, 14, 59, 58, 57, 66, 76, 77,
-    89, 64, 74, 83, 62, 71, 61, 87,
-  ];
   trees.forEach((tree) => {
     cells[tree].classList.add("trees");
   });
 }
-addTrees();
+
+// *** COLLISION DETECTION ***
+function treeBash(futurePosition) {
+  return trees.includes(futurePosition);
+}
 
 // *** MOVE PETE ACROSS THE BOARD ***
 function addPete(position) {
@@ -39,7 +44,7 @@ function playerMove(event) {
   const yPosition = Math.floor(pete / width);
   //left
   if (event.keyCode === 37) {
-    if (xPosition > 0) {
+    if (xPosition > 0 && !treeBash(pete - 1)) {
       removePete(pete);
       pete--;
       addPete(pete);
@@ -47,7 +52,7 @@ function playerMove(event) {
   }
   //right
   if (event.keyCode === 39) {
-    if (xPosition < width - 1) {
+    if (xPosition < width - 1 && !treeBash(pete + 1)) {
       removePete(pete);
       pete++;
       addPete(pete);
@@ -55,7 +60,7 @@ function playerMove(event) {
   }
   // up
   if (event.keyCode === 38) {
-    if (yPosition > 0) {
+    if (yPosition > 0 && !treeBash(pete - width)) {
       removePete(pete);
       pete = pete - width;
       addPete(pete);
@@ -63,14 +68,13 @@ function playerMove(event) {
   }
   //down
   if (event.keyCode === 40) {
-    if (yPosition < width - 1) {
+    if (yPosition < width - 1 && !treeBash(pete + width)) {
       removePete(pete);
       pete = pete + width;
       addPete(pete);
     }
   }
 }
-
 document.addEventListener("keyup", playerMove);
 
 // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
@@ -94,9 +98,8 @@ function moveSpeedoSteve() {
       i = 0;
       addSpeedoSteve(steveWalk[i]);
     }
-  }, 1000);
+  }, 500);
 }
-moveSpeedoSteve();
 
 // **** BOUNCERAPTER MOVING ACROSS THE BOARD ******
 function addRaptor(position) {
@@ -107,7 +110,7 @@ function removeRaptor(position) {
 }
 function moveRaptor() {
   let i = 0;
-  const raptorWalk = [18, 28, 38, 48, 47, 46, 45, 46, 47, 48, 38, 28, 18];
+  const raptorWalk = [28, 38, 48, 47, 46, 45, 46, 47, 48, 38, 28];
   setInterval(() => {
     if (i < raptorWalk.length - 1) {
       removeRaptor(raptorWalk[i]);
@@ -118,7 +121,7 @@ function moveRaptor() {
       i = 0;
       addRaptor(raptorWalk[i]);
     }
-  }, 800);
+  }, 700);
 }
 
 // **** EXPLORER MOVING ACROSS THE BOARD ******
@@ -144,6 +147,31 @@ function moveExplorer() {
   }, 800);
 }
 
+// **** DAVY MOVING ACROSS THE BOARD ******
+function addDavy(position) {
+  cells[position].classList.add("davy");
+}
+function removeDavy(position) {
+  cells[position].classList.remove("davy");
+}
+function moveDavy() {
+  let i = 0;
+  const davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
+  setInterval(() => {
+    if (i < davyWalk.length - 1) {
+      removeDavy(davyWalk[i]);
+      i++;
+      addDavy(davyWalk[i]);
+    } else {
+      removeDavy(davyWalk[i]);
+      i = 0;
+      addDavy(davyWalk[i]);
+    }
+  }, 600);
+}
+
+addTrees();
 moveSpeedoSteve();
 moveRaptor();
 moveExplorer();
+moveDavy();
