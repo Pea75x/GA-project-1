@@ -48,3 +48,12 @@ img {
   background-image: url("../images/Explorer.png");
   background-size: contain;
 }
+.pete {
+  background-image: url("../images/pirate.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.trees {
+  background-image: url("../images/palmTree.png");
+  background-size: contain;
+}

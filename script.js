@@ -2,6 +2,7 @@ const grid = document.querySelector(".grid");
 const width = 10;
 const gridCellCount = width * width;
 const cells = [];
+let pete = 0;
 
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
@@ -12,6 +13,65 @@ function createGrid() {
   }
 }
 createGrid();
+
+function addTrees() {
+  const trees = [
+    7, 17, 27, 37, 36, 35, 33, 43, 42, 20, 21, 13, 14, 59, 58, 57, 66, 76, 77,
+    89, 64, 74, 83, 62, 71, 61, 87,
+  ];
+  trees.forEach((tree) => {
+    cells[tree].classList.add("trees");
+  });
+}
+addTrees();
+
+// *** MOVE PETE ACROSS THE BOARD ***
+function addPete(position) {
+  cells[position].classList.add("pete");
+}
+function removePete(position) {
+  cells[position].classList.remove("pete");
+}
+addPete(0);
+
+function playerMove(event) {
+  const xPosition = pete % width;
+  const yPosition = Math.floor(pete / width);
+  //left
+  if (event.keyCode === 37) {
+    if (xPosition > 0) {
+      removePete(pete);
+      pete--;
+      addPete(pete);
+    }
+  }
+  //right
+  if (event.keyCode === 39) {
+    if (xPosition < width - 1) {
+      removePete(pete);
+      pete++;
+      addPete(pete);
+    }
+  }
+  // up
+  if (event.keyCode === 38) {
+    if (yPosition > 0) {
+      removePete(pete);
+      pete = pete - width;
+      addPete(pete);
+    }
+  }
+  //down
+  if (event.keyCode === 40) {
+    if (yPosition < width - 1) {
+      removePete(pete);
+      pete = pete + width;
+      addPete(pete);
+    }
+  }
+}
+
+document.addEventListener("keyup", playerMove);
 
 // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
 // to add! smooth the transition, and make the player lose points when they colide
