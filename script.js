@@ -51,14 +51,17 @@ function treeBash(futurePosition) {
   return trees.includes(futurePosition);
 }
 
+// *** ADD OR REMOVE ANY ELEMENT **
+function addElement(position, object) {
+  cells[position].classList.add(object);
+}
+function removeElement(position, object) {
+  cells[position].classList.remove(object);
+}
+
 // *** MOVE PETE ACROSS THE BOARD ***
-function addPete(position) {
-  cells[position].classList.add("pete");
-}
-function removePete(position) {
-  cells[position].classList.remove("pete");
-}
-addPete(0);
+
+addElement(0, "pete");
 
 function playerMove(event) {
   const xPosition = pete % width;
@@ -66,33 +69,33 @@ function playerMove(event) {
   //left
   if (event.keyCode === 37) {
     if (xPosition > 0 && !treeBash(pete - 1)) {
-      removePete(pete);
+      removeElement(pete, "pete");
       pete--;
-      addPete(pete);
+      addElement(pete, "pete");
     }
   }
   //right
   if (event.keyCode === 39) {
     if (xPosition < width - 1 && !treeBash(pete + 1)) {
-      removePete(pete);
+      removeElement(pete, "pete");
       pete++;
-      addPete(pete);
+      addElement(pete, "pete");
     }
   }
   // up
   if (event.keyCode === 38) {
     if (yPosition > 0 && !treeBash(pete - width)) {
-      removePete(pete);
+      removeElement(pete, "pete");
       pete = pete - width;
-      addPete(pete);
+      addElement(pete, "pete");
     }
   }
   //down
   if (event.keyCode === 40) {
     if (yPosition < width - 1 && !treeBash(pete + width)) {
-      removePete(pete);
+      removeElement(pete, "pete");
       pete = pete + width;
-      addPete(pete);
+      addElement(pete, "pete");
     }
   }
 }
@@ -101,9 +104,9 @@ document.addEventListener("keyup", playerMove);
 // ** collision with the bad guys **
 function pointsRemoved(points) {
   score = score - points;
-  removePete(pete);
+  removeElement(pete, "pete");
   pete = 0;
-  addPete(pete);
+  addElement(pete, "pete");
 }
 
 function caught() {
@@ -154,87 +157,62 @@ function addPoints() {
 addPoints();
 
 // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
-// to add! smooth the transition, and make the player lose points when they colide
-function addSpeedoSteve(position) {
-  cells[position].classList.add("speedoSteve");
-}
-function removeSpeedoSteve(position) {
-  cells[position].classList.remove("speedoSteve");
-}
+// to add! smooth the transition
 function moveSpeedoSteve() {
   setInterval(() => {
     if (s < steveWalk.length - 1) {
-      removeSpeedoSteve(steveWalk[s]);
+      removeElement(steveWalk[s], "speedoSteve");
       s++;
-      addSpeedoSteve(steveWalk[s]);
+      addElement(steveWalk[s], "speedoSteve");
     } else {
-      removeSpeedoSteve(steveWalk[s]);
+      removeElement(steveWalk[s], "speedoSteve");
       s = 0;
-      addSpeedoSteve(steveWalk[s]);
+      addElement(steveWalk[s], "speedoSteve");
     }
   }, 500);
 }
 
 // **** BOUNCERAPTER MOVING ACROSS THE BOARD ******
-function addRaptor(position) {
-  cells[position].classList.add("raptor");
-}
-function removeRaptor(position) {
-  cells[position].classList.remove("raptor");
-}
-
 function moveRaptor() {
   setInterval(() => {
     if (r < raptorWalk.length - 1) {
-      removeRaptor(raptorWalk[r]);
+      removeElement(raptorWalk[r], "raptor");
       r++;
-      addRaptor(raptorWalk[r]);
+      addElement(raptorWalk[r], "raptor");
     } else {
-      removeRaptor(raptorWalk[r]);
+      removeElement(raptorWalk[r], "raptor");
       r = 0;
-      addRaptor(raptorWalk[r]);
+      addElement(raptorWalk[r], "raptor");
     }
   }, 700);
 }
 
 // **** EXPLORER MOVING ACROSS THE BOARD ******
-function addexplorer(position) {
-  cells[position].classList.add("explorer");
-}
-function removeExplorer(position) {
-  cells[position].classList.remove("explorer");
-}
 function moveExplorer() {
   setInterval(() => {
     if (e < explorerWalk.length - 1) {
-      removeExplorer(explorerWalk[e]);
+      removeElement(explorerWalk[e], "explorer");
       e++;
-      addexplorer(explorerWalk[e]);
+      addElement(explorerWalk[e], "explorer");
     } else {
-      removeExplorer(explorerWalk[e]);
+      removeElement(explorerWalk[e], "explorer");
       e = 0;
-      addexplorer(explorerWalk[e]);
+      addElement(explorerWalk[e], "explorer");
     }
   }, 800);
 }
 
 // **** DAVY MOVING ACROSS THE BOARD ******
-function addDavy(position) {
-  cells[position].classList.add("davy");
-}
-function removeDavy(position) {
-  cells[position].classList.remove("davy");
-}
 function moveDavy() {
   setInterval(() => {
     if (dj < davyWalk.length - 1) {
-      removeDavy(davyWalk[dj]);
+      removeElement(davyWalk[dj], "davy");
       dj++;
-      addDavy(davyWalk[dj]);
+      addElement(davyWalk[dj], "davy");
     } else {
-      removeDavy(davyWalk[dj]);
+      removeElement(davyWalk[dj], "davy");
       dj = 0;
-      addDavy(davyWalk[dj]);
+      addElement(davyWalk[dj], "davy");
     }
   }, 600);
 }
