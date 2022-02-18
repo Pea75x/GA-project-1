@@ -57,9 +57,6 @@ function playerMove(event) {
       removePete(pete);
       pete--;
       addPete(pete);
-      if (raptorWalk[r] === pete) {
-        caughtByraptor();
-      }
     }
   }
   //right
@@ -68,9 +65,6 @@ function playerMove(event) {
       removePete(pete);
       pete++;
       addPete(pete);
-      if (raptorWalk[r] === pete) {
-        caughtByraptor();
-      }
     }
   }
   // up
@@ -79,9 +73,6 @@ function playerMove(event) {
       removePete(pete);
       pete = pete - width;
       addPete(pete);
-      if (raptorWalk[r] === pete) {
-        caughtByraptor();
-      }
     }
   }
   //down
@@ -90,13 +81,45 @@ function playerMove(event) {
       removePete(pete);
       pete = pete + width;
       addPete(pete);
-      if (raptorWalk[r] === pete) {
-        caughtByraptor();
-      }
     }
   }
 }
 document.addEventListener("keyup", playerMove);
+
+// ** collision with the bad guys **
+function pointsRemoved(points) {
+  score = score - points;
+  removePete(pete);
+  pete = 0;
+  addPete(pete);
+}
+
+function caught() {
+  setInterval(() => {
+    if (steveWalk[s] === pete) {
+      pointsRemoved(10);
+      console.log(
+        `Why hello there sexy pirate.. Can I come aboard.. \n score = ${score}`
+      );
+    } else if (raptorWalk[r] === pete) {
+      pointsRemoved(10);
+      console.log(
+        `RAHHHH Youre way too drunk to come to our beach party! Go home! \n score = ${score}`
+      );
+    } else if (explorerWalk[e] === pete) {
+      pointsRemoved(5);
+      console.log(
+        `Hello mr pirate! What happened to your leg? Where are you going? How did you get so round? ... \n score = ${score}`
+      );
+    } else if (davyWalk[dj] === pete) {
+      pointsRemoved(5);
+      console.log(
+        `aaarrrrrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion! \n score = ${score}`
+      );
+    }
+  }, 500);
+}
+caught();
 
 // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
 // to add! smooth the transition, and make the player lose points when they colide
@@ -112,23 +135,12 @@ function moveSpeedoSteve() {
       removeSpeedoSteve(steveWalk[s]);
       s++;
       addSpeedoSteve(steveWalk[s]);
-      if (steveWalk[s] === pete) {
-        caughtBySteve();
-      }
     } else {
       removeSpeedoSteve(steveWalk[s]);
       s = 0;
       addSpeedoSteve(steveWalk[s]);
-      if (steveWalk[s] === pete) {
-        caughtBySteve();
-      }
     }
   }, 500);
-}
-
-function caughtBySteve() {
-  score = score - 10;
-  console.log("Why hello there sexy pirate.. Can I come aboard..");
 }
 
 // **** BOUNCERAPTER MOVING ACROSS THE BOARD ******
@@ -145,27 +157,12 @@ function moveRaptor() {
       removeRaptor(raptorWalk[r]);
       r++;
       addRaptor(raptorWalk[r]);
-      if (raptorWalk[r] === pete) {
-        caughtByraptor();
-      }
     } else {
       removeRaptor(raptorWalk[r]);
       r = 0;
       addRaptor(raptorWalk[r]);
-      if (raptorWalk[r] === pete) {
-        caughtByraptor();
-      }
     }
   }, 700);
-}
-function caughtByraptor() {
-  score = score - 10;
-  removePete(pete);
-  pete = 0;
-  addPete(pete);
-  console.log(
-    "RAHHHH Youre way too drunk to come to our beach party! Go home!"
-  );
 }
 
 // **** EXPLORER MOVING ACROSS THE BOARD ******
@@ -181,24 +178,12 @@ function moveExplorer() {
       removeExplorer(explorerWalk[e]);
       e++;
       addexplorer(explorerWalk[e]);
-      if (explorerWalk[e] === pete) {
-        caughtByExplorer();
-      }
     } else {
       removeExplorer(explorerWalk[e]);
       e = 0;
       addexplorer(explorerWalk[e]);
-      if (explorerWalk[e] === pete) {
-        caughtByExplorer();
-      }
     }
   }, 800);
-}
-function caughtByExplorer() {
-  score = score - 10;
-  console.log(
-    "Hello mr pirate! What happened to your leg? Where are you going? How did you get so round? ..."
-  );
 }
 
 // **** DAVY MOVING ACROSS THE BOARD ******
@@ -214,24 +199,12 @@ function moveDavy() {
       removeDavy(davyWalk[dj]);
       dj++;
       addDavy(davyWalk[dj]);
-      if (davyWalk[dj] === pete) {
-        caughtByDavy();
-      }
     } else {
       removeDavy(davyWalk[dj]);
       dj = 0;
       addDavy(davyWalk[dj]);
-      if (davyWalk[dj] === pete) {
-        caughtByDavy();
-      }
     }
   }, 600);
-}
-function caughtByDavy() {
-  score = score - 10;
-  console.log(
-    `aaarrrrrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion!`
-  );
 }
 
 addTrees();
