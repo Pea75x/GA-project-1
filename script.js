@@ -16,6 +16,8 @@ let s = 0;
 const steveWalk = [68, 78, 88, 98, 97, 96, 95, 96, 97, 98, 88, 78, 68];
 let dj = 0;
 const davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
+const rum1 = [50, 94, 55, 16];
+const rum2 = [34, 91, 99, 39];
 
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
@@ -31,6 +33,16 @@ createGrid();
 function addTrees() {
   trees.forEach((tree) => {
     cells[tree].classList.add("trees");
+  });
+}
+
+// ** ADD DRINKS **
+function addDrinks() {
+  rum1.forEach((bottle) => {
+    cells[bottle].classList.add("rum1");
+  });
+  rum2.forEach((bottle) => {
+    cells[bottle].classList.add("rum2");
   });
 }
 
@@ -117,9 +129,29 @@ function caught() {
         `aaarrrrrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion! \n score = ${score}`
       );
     }
-  }, 500);
+  }, 200);
 }
 caught();
+
+// ** collision with the rum **
+function removeDrink(position, object) {
+  cells[position].classList.remove(object);
+}
+
+function addPoints() {
+  setInterval(() => {
+    if (cells[pete].classList.contains("rum1")) {
+      score = score + 5;
+      removeDrink(pete, "rum1");
+      console.log(score);
+    } else if (cells[pete].classList.contains("rum2")) {
+      score = score + 10;
+      removeDrink(pete, "rum2");
+      console.log(score);
+    }
+  }, 200);
+}
+addPoints();
 
 // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
 // to add! smooth the transition, and make the player lose points when they colide
@@ -207,6 +239,7 @@ function moveDavy() {
   }, 600);
 }
 
+addDrinks();
 addTrees();
 moveSpeedoSteve();
 moveRaptor();
