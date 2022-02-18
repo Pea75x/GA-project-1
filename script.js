@@ -3,10 +3,19 @@ const width = 10;
 const gridCellCount = width * width;
 const cells = [];
 let pete = 0;
+let score = 0;
 const trees = [
   7, 17, 27, 37, 36, 35, 33, 43, 42, 20, 21, 13, 14, 59, 58, 57, 66, 76, 77, 89,
   64, 74, 83, 62, 71, 61, 87,
 ];
+let r = 0;
+const raptorWalk = [28, 38, 48, 47, 46, 45, 46, 47, 48, 38, 28];
+let e = 0;
+const explorerWalk = [22, 12, 2, 3, 4, 5, 15, 25, 24, 23];
+let s = 0;
+const steveWalk = [68, 78, 88, 98, 97, 96, 95, 96, 97, 98, 88, 78, 68];
+let dj = 0;
+const davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
 
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
@@ -48,6 +57,9 @@ function playerMove(event) {
       removePete(pete);
       pete--;
       addPete(pete);
+      if (raptorWalk[r] === pete) {
+        caughtByraptor();
+      }
     }
   }
   //right
@@ -56,6 +68,9 @@ function playerMove(event) {
       removePete(pete);
       pete++;
       addPete(pete);
+      if (raptorWalk[r] === pete) {
+        caughtByraptor();
+      }
     }
   }
   // up
@@ -64,6 +79,9 @@ function playerMove(event) {
       removePete(pete);
       pete = pete - width;
       addPete(pete);
+      if (raptorWalk[r] === pete) {
+        caughtByraptor();
+      }
     }
   }
   //down
@@ -72,6 +90,9 @@ function playerMove(event) {
       removePete(pete);
       pete = pete + width;
       addPete(pete);
+      if (raptorWalk[r] === pete) {
+        caughtByraptor();
+      }
     }
   }
 }
@@ -86,19 +107,28 @@ function removeSpeedoSteve(position) {
   cells[position].classList.remove("speedoSteve");
 }
 function moveSpeedoSteve() {
-  let i = 0;
-  const steveWalk = [68, 78, 88, 98, 97, 96, 95, 96, 97, 98, 88, 78, 68];
   setInterval(() => {
-    if (i < steveWalk.length - 1) {
-      removeSpeedoSteve(steveWalk[i]);
-      i++;
-      addSpeedoSteve(steveWalk[i]);
+    if (s < steveWalk.length - 1) {
+      removeSpeedoSteve(steveWalk[s]);
+      s++;
+      addSpeedoSteve(steveWalk[s]);
+      if (steveWalk[s] === pete) {
+        caughtBySteve();
+      }
     } else {
-      removeSpeedoSteve(steveWalk[i]);
-      i = 0;
-      addSpeedoSteve(steveWalk[i]);
+      removeSpeedoSteve(steveWalk[s]);
+      s = 0;
+      addSpeedoSteve(steveWalk[s]);
+      if (steveWalk[s] === pete) {
+        caughtBySteve();
+      }
     }
   }, 500);
+}
+
+function caughtBySteve() {
+  score = score - 10;
+  console.log("Why hello there sexy pirate.. Can I come aboard..");
 }
 
 // **** BOUNCERAPTER MOVING ACROSS THE BOARD ******
@@ -108,20 +138,34 @@ function addRaptor(position) {
 function removeRaptor(position) {
   cells[position].classList.remove("raptor");
 }
+
 function moveRaptor() {
-  let i = 0;
-  const raptorWalk = [28, 38, 48, 47, 46, 45, 46, 47, 48, 38, 28];
   setInterval(() => {
-    if (i < raptorWalk.length - 1) {
-      removeRaptor(raptorWalk[i]);
-      i++;
-      addRaptor(raptorWalk[i]);
+    if (r < raptorWalk.length - 1) {
+      removeRaptor(raptorWalk[r]);
+      r++;
+      addRaptor(raptorWalk[r]);
+      if (raptorWalk[r] === pete) {
+        caughtByraptor();
+      }
     } else {
-      removeRaptor(raptorWalk[i]);
-      i = 0;
-      addRaptor(raptorWalk[i]);
+      removeRaptor(raptorWalk[r]);
+      r = 0;
+      addRaptor(raptorWalk[r]);
+      if (raptorWalk[r] === pete) {
+        caughtByraptor();
+      }
     }
   }, 700);
+}
+function caughtByraptor() {
+  score = score - 10;
+  removePete(pete);
+  pete = 0;
+  addPete(pete);
+  console.log(
+    "RAHHHH Youre way too drunk to come to our beach party! Go home!"
+  );
 }
 
 // **** EXPLORER MOVING ACROSS THE BOARD ******
@@ -132,19 +176,29 @@ function removeExplorer(position) {
   cells[position].classList.remove("explorer");
 }
 function moveExplorer() {
-  let i = 0;
-  const explorerWalk = [22, 12, 2, 3, 4, 5, 15, 25, 24, 23];
   setInterval(() => {
-    if (i < explorerWalk.length - 1) {
-      removeExplorer(explorerWalk[i]);
-      i++;
-      addexplorer(explorerWalk[i]);
+    if (e < explorerWalk.length - 1) {
+      removeExplorer(explorerWalk[e]);
+      e++;
+      addexplorer(explorerWalk[e]);
+      if (explorerWalk[e] === pete) {
+        caughtByExplorer();
+      }
     } else {
-      removeExplorer(explorerWalk[i]);
-      i = 0;
-      addexplorer(explorerWalk[i]);
+      removeExplorer(explorerWalk[e]);
+      e = 0;
+      addexplorer(explorerWalk[e]);
+      if (explorerWalk[e] === pete) {
+        caughtByExplorer();
+      }
     }
   }, 800);
+}
+function caughtByExplorer() {
+  score = score - 10;
+  console.log(
+    "Hello mr pirate! What happened to your leg? Where are you going? How did you get so round? ..."
+  );
 }
 
 // **** DAVY MOVING ACROSS THE BOARD ******
@@ -155,19 +209,29 @@ function removeDavy(position) {
   cells[position].classList.remove("davy");
 }
 function moveDavy() {
-  let i = 0;
-  const davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
   setInterval(() => {
-    if (i < davyWalk.length - 1) {
-      removeDavy(davyWalk[i]);
-      i++;
-      addDavy(davyWalk[i]);
+    if (dj < davyWalk.length - 1) {
+      removeDavy(davyWalk[dj]);
+      dj++;
+      addDavy(davyWalk[dj]);
+      if (davyWalk[dj] === pete) {
+        caughtByDavy();
+      }
     } else {
-      removeDavy(davyWalk[i]);
-      i = 0;
-      addDavy(davyWalk[i]);
+      removeDavy(davyWalk[dj]);
+      dj = 0;
+      addDavy(davyWalk[dj]);
+      if (davyWalk[dj] === pete) {
+        caughtByDavy();
+      }
     }
   }, 600);
+}
+function caughtByDavy() {
+  score = score - 10;
+  console.log(
+    `aaarrrrrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion!`
+  );
 }
 
 addTrees();
