@@ -10,7 +10,7 @@ body {
   background-size: cover;
   display: flex;
   justify-content: center;
-  background-image: url("../images/jungle.jpg");
+  background-image: url("../images/jungleNEW.jpg");
   background-repeat: no-repeat;
 }
 
@@ -115,10 +115,26 @@ img {
   bottom: 0px;
   height: 310px;
 }
+.speechBubble {
+  position: absolute;
+  right: 0px;
+  bottom: 200px;
+}
+.speechBubble img {
+  height: 350px;
+}
+.speechBubbleText {
+  position: absolute;
+  right: 0%;
+  top: 25%;
+  padding: 30px 50px;
+  text-align: center;
+  font-size: 30px;
+}
 .pointsPanel {
   position: absolute;
   width: 200px;
-  left: 40px;
+  left: 70px;
   top: 200px;
 }
 .pointsAndAnouncement {
@@ -162,7 +178,7 @@ img {
 }
 .drunknessLevel {
   margin: 10px 0;
-  color: #a77d42;
+  color: white;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.6),
     0 0 10px rgba(0, 0, 0, 0.377);
 }

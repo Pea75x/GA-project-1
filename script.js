@@ -25,6 +25,16 @@ const progressBar = document.querySelector(".progress-inner");
 const anouncement = document.querySelector(".anouncement");
 const gate1 = 8;
 const gate2 = 9;
+const speechBubble = document.querySelector(".speechBubbleText");
+const mermaidText = [
+  "Watch out for Speedo Steve! \nHis unwanted pervyness will sober you up!",
+  "Dont let the Bouncer-Raptor catch you! \nHe will send you home!",
+  "This Paleo-Pirate party is so fun! You're missing out!",
+  "Curious Kevin is out on an expedition today! Dont get caught up in his endless questions..",
+];
+let m = 0;
+const jungleAmbience = document.querySelector(".jungleMusic");
+const soundEffect = document.querySelector(".soundEffect");
 
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
@@ -35,6 +45,14 @@ function createGrid() {
   }
 }
 createGrid();
+
+// ** ADD MUSIC ** //
+jungleAmbience.play();
+
+function playSound(event) {
+  soundEffect.src = `./sounds/${event}.mp3`;
+  soundEffect.play();
+}
 
 // *** ADD TREES AND JURRASIC ENTRANCE**
 function addTrees() {
@@ -127,24 +145,27 @@ function caught() {
   setInterval(() => {
     if (steveWalk[s] === pete) {
       pointsRemoved(10);
-      console.log(
-        `Why hello there sexy pirate.. Can I come aboard.. \n score = ${score}`
-      );
+      console.log(`Why hello there.. Can I come aboard.. \n score = ${score}`);
+      soundEffect.src = "./sounds/speedoSteve.wav";
+      soundEffect.play();
     } else if (raptorWalk[r] === pete) {
       pointsRemoved(10);
       console.log(
         `RAHHHH Youre way too drunk to come to our beach party! Go home! \n score = ${score}`
       );
+      playSound("raptor");
     } else if (explorerWalk[e] === pete) {
       pointsRemoved(5);
       console.log(
         `Hello mr pirate! What happened to your leg? Where are you going? How did you get so round? ... \n score = ${score}`
       );
+      playSound("littleExplorer");
     } else if (davyWalk[dj] === pete) {
       pointsRemoved(5);
       console.log(
         `aaarrrrrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion! \n score = ${score}`
       );
+      playSound("davyJones");
     }
   }, 200);
 }
@@ -156,19 +177,19 @@ function addPoints() {
     if (cells[pete].classList.contains("rum1")) {
       score = score + 5;
       removeElement(pete, "rum1");
-      console.log(score);
+      playSound("slurp");
     } else if (cells[pete].classList.contains("rum2")) {
       score = score + 10;
       removeElement(pete, "rum2");
-      console.log(score);
+      playSound("slurp");
     } else if (cells[pete].classList.contains("coconut")) {
       score = score + 10;
       removeElement(pete, "coconut");
-      console.log(score);
+      playSound("slurp");
     } else if (cells[pete].classList.contains("cocktail")) {
       score = score + 20;
       removeElement(pete, "cocktail");
-      console.log(score);
+      playSound("slurp");
     }
   }, 200);
 }
@@ -187,7 +208,16 @@ function sufficientlyDrunk() {
       progressBar.classList.add("completelyDrunk");
       removeElement(x, "x");
       addElement(x, "treasure");
+      playSound("treasure");
+      clearInterval(pointsTimer);
+      treasure();
     }
+  }, 200);
+}
+sufficientlyDrunk();
+
+function treasure() {
+  let treasureTimer = setInterval(() => {
     if (cells[pete].classList.contains("treasure")) {
       score = score + 20;
       removeElement(pete, "treasure");
@@ -197,23 +227,45 @@ function sufficientlyDrunk() {
       addElement(gate1, "openGates");
       removeElement(gate2, "gate2");
       addElement(gate2, "openGates");
-      clearInterval(pointsTimer);
+      playSound("door");
+      clearInterval(treasureTimer);
       win();
-      //open the doors
     }
   }, 200);
 }
-sufficientlyDrunk();
+
+//open the doors
 
 // ** Getting to the entrance - WINNING **
 function win() {
   const winTimer = setInterval(() => {
     if (cells[pete].classList.contains("openGates")) {
       anouncement.innerHTML = "You have won!";
+      soundEffect.src = `./sounds/win.wav`;
+      soundEffect.play();
       clearInterval(winTimer);
     }
   }, 200);
 }
+
+//** Mermaid speech */
+function mermaid() {
+  const mermaidSpeech = setInterval(() => {
+    if (m < mermaidText.length - 1) {
+      speechBubble.innerText = mermaidText[m];
+      m++;
+    } else {
+      speechBubble.innerText = mermaidText[m];
+      m = 0;
+    }
+    if (cells[pete].classList.contains("openGates")) {
+      speechBubble.innerHTML = "YAY you made it!";
+      speechBubble.style.right = "45px";
+      clearInterval(mermaidSpeech);
+    }
+  }, 5000);
+}
+mermaid();
 
 // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
 // to add! smooth the transition
