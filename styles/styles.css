@@ -53,6 +53,9 @@ img {
   height: 10%;
   width: 10%;
 }
+.openGates {
+  background-image: none;
+}
 .rum1 {
   background-image: url("../images/rum1.png");
   background-size: contain;
@@ -175,7 +178,11 @@ img {
     transform: scale(1);
   }
 }
-.gate1,
+.gate1 {
+  background-image: url("../images/door1.png");
+  background-size: contain;
+}
 .gate2 {
-  background-color: #724926;
+  background-image: url("../images/door2.png");
+  background-size: contain;
 }

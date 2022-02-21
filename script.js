@@ -193,6 +193,10 @@ function sufficientlyDrunk() {
       removeElement(pete, "treasure");
       anouncement.innerHTML = `YOU GOT THE GOLD - ${score}`;
       //ADD IN THE WIN WHEN HE GOES TO THE JURASSIC GATES
+      removeElement(gate1, "gate1");
+      addElement(gate1, "openGates");
+      removeElement(gate2, "gate2");
+      addElement(gate2, "openGates");
       clearInterval(pointsTimer);
       win();
       //open the doors
@@ -204,7 +208,7 @@ sufficientlyDrunk();
 // ** Getting to the entrance - WINNING **
 function win() {
   const winTimer = setInterval(() => {
-    if (cells[pete].classList.contains("gate1")) {
+    if (cells[pete].classList.contains("openGates")) {
       anouncement.innerHTML = "You have won!";
       clearInterval(winTimer);
     }
