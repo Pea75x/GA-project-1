@@ -18,6 +18,11 @@ let dj = 0;
 const davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
 const rum1 = [50, 94, 55, 16];
 const rum2 = [34, 91, 99, 39];
+const coconut = [3, 86, 72, 30];
+const cocktail = [79];
+const x = [67];
+const progressBar = document.querySelector(".progress-inner");
+const anouncement = document.querySelector(".anouncement");
 
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
@@ -32,18 +37,23 @@ createGrid();
 // *** ADD TREES **
 function addTrees() {
   trees.forEach((tree) => {
-    cells[tree].classList.add("trees");
+    addElement(tree, "trees");
   });
 }
 
 // ** ADD DRINKS **
 function addDrinks() {
   rum1.forEach((bottle) => {
-    cells[bottle].classList.add("rum1");
+    addElement(bottle, "rum1");
   });
   rum2.forEach((bottle) => {
-    cells[bottle].classList.add("rum2");
+    addElement(bottle, "rum2");
   });
+  coconut.forEach((cup) => {
+    addElement(cup, "coconut");
+  });
+  addElement(cocktail, "cocktail");
+  addElement(x, "x");
 }
 
 // *** COLLISION DETECTION ***
@@ -60,7 +70,6 @@ function removeElement(position, object) {
 }
 
 // *** MOVE PETE ACROSS THE BOARD ***
-
 addElement(0, "pete");
 
 function playerMove(event) {
@@ -137,24 +146,53 @@ function caught() {
 caught();
 
 // ** collision with the rum **
-function removeDrink(position, object) {
-  cells[position].classList.remove(object);
-}
-
 function addPoints() {
   setInterval(() => {
     if (cells[pete].classList.contains("rum1")) {
       score = score + 5;
-      removeDrink(pete, "rum1");
+      removeElement(pete, "rum1");
       console.log(score);
     } else if (cells[pete].classList.contains("rum2")) {
       score = score + 10;
-      removeDrink(pete, "rum2");
+      removeElement(pete, "rum2");
+      console.log(score);
+    } else if (cells[pete].classList.contains("coconut")) {
+      score = score + 10;
+      removeElement(pete, "coconut");
+      console.log(score);
+    } else if (cells[pete].classList.contains("cocktail")) {
+      score = score + 20;
+      removeElement(pete, "cocktail");
       console.log(score);
     }
   }, 200);
 }
 addPoints();
+
+function sufficientlyDrunk() {
+  let timer = setInterval(() => {
+    if (score < 100) {
+      progressBar.style.height = `${score}%`;
+      anouncement.innerHTML = score;
+    } else {
+      progressBar.style.height = "100%";
+      anouncement.innerHTML =
+        "You are sufficiently drunk! Find the treasure and make your way to the paleo-pirate party!";
+      progressBar.classList.add("completelyDrunk");
+      removeElement(x, "x");
+      addElement(x, "treasure");
+    }
+    if (cells[pete].classList.contains("treasure")) {
+      score = score + 20;
+      removeElement(pete, "treasure");
+      console.log(`YOU GOT THE GOLD - ${score}`);
+      //ADD IN THE WIN WHEN HE GOES TO THE JURASSIC GATES
+      //open the doors
+      clearInterval(timer);
+    }
+  }, 200);
+}
+sufficientlyDrunk();
 
 // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
 // to add! smooth the transition

@@ -4,19 +4,38 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="http://fonts.cdnfonts.com/css/treasure-map-deadland"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles/styles.css" />
     <title>Document</title>
   </head>
   <body>
     <div class="scroll">
       <div class="header-wrapper">
-        <p>Cell number: <span id="score-display"></span></p>
+        <img
+          src="./images/title1.png"
+          class="title"
+          alt="Pirate Petes Journey Juice Hunt"
+        />
       </div>
       <div class="grid-wrapper">
         <div class="grid"></div>
       </div>
     </div>
-    <div class="progessBar"></div>
+    <img class="mermaid" src="./images/mermaid.png" alt="" />
+    <div class="pointsPanel">
+      <div class="pointsAndAnouncement">
+        <div class="anouncement"></div>
+        <div class="container">
+          <p class="drunknessLevel">Drunk-o-meter</p>
+          <div class="progress-outer">
+            <div class="progress-inner"><div class="carrat"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="./script.js"></script>
   </body>
 </html>

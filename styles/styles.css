@@ -1,18 +1,36 @@
 * {
   box-sizing: border-box;
+  font-family: "Treasure Map Deadhand", sans-serif;
+  font-size: 40px;
 }
 
 body {
   height: 100vh;
   margin: 0;
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  background-image: url("../images/jungle.jpg");
+  background-repeat: no-repeat;
 }
 
+.title {
+  width: 800px;
+  height: 140px;
+}
+
+.scroll {
+  background-image: url("../images/myMap1.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 1000px;
+  background-position: center;
+}
 .header-wrapper {
-  height: 135px;
+  height: 130px;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .grid-wrapper {
@@ -32,9 +50,29 @@ img {
 }
 
 .grid div {
-  border: 2px solid lightgray;
+  border: 1px solid #724926;
   height: 10%;
   width: 10%;
+}
+.rum1 {
+  background-image: url("../images/rum1.png");
+  background-size: contain;
+}
+.rum2 {
+  background-image: url("../images/rum2.png");
+  background-size: contain;
+}
+.coconut {
+  background-image: url("../images/coconut.png");
+  background-size: contain;
+}
+.cocktail {
+  background-image: url("../images/cocktail.png");
+  background-size: contain;
+}
+.x {
+  background-image: url("../images/x.png");
+  background-size: contain;
 }
 .speedoSteve {
   background-image: url("../images/speedoSteve.png");
@@ -46,6 +84,10 @@ img {
 }
 .explorer {
   background-image: url("../images/Explorer.png");
+  background-size: contain;
+}
+.treasure {
+  background-image: url("../images/treasure.png");
   background-size: contain;
 }
 .pete {
@@ -61,11 +103,82 @@ img {
   background-image: url("../images/DavyJones.png");
   background-size: contain;
 }
-.rum1 {
-  background-image: url("../images/rum1.png");
-  background-size: contain;
+.mermaid {
+  position: absolute;
+  right: 180px;
+  bottom: 0px;
+  height: 310px;
 }
-.rum2 {
-  background-image: url("../images/rum2.png");
-  background-size: contain;
+.pointsPanel {
+  position: absolute;
+  width: 200px;
+  left: 40px;
+  top: 200px;
+}
+.pointsAndAnouncement {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 500px;
+}
+.anouncement {
+  background-color: rgba(255, 255, 255, 0.308);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
+  padding: 20px 0;
+  width: 200px;
+  border-radius: ;
+}
+.container {
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.progress-outer {
+  background-color: rgba(255, 255, 255, 0.26);
+  width: 28%;
+  height: 300px;
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(0, 0, 0, 0.1);
+}
+.progress-inner {
+  border-radius: 25px 25px 0 0;
+  height: 20%;
+  width: 100%;
+  position: relative;
+  background-image: url("../images/alcoholLevel.webp");
+  transition: height 1s;
+}
+.completelyDrunk {
+  border-radius: 25px;
+}
+.drunknessLevel {
+  margin: 10px 0;
+  color: #a77d42;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(0, 0, 0, 0.377);
+}
+
+.pulse {
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
