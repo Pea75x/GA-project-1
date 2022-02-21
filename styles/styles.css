@@ -50,7 +50,6 @@ img {
 }
 
 .grid div {
-  border: 1px solid #724926;
   height: 10%;
   width: 10%;
 }
@@ -127,7 +126,7 @@ img {
     0 0 20px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
   padding: 20px 0;
   width: 200px;
-  border-radius: ;
+  border-radius: 3px;
 }
 .container {
   font-size: 10px;
@@ -181,4 +180,8 @@ img {
   100% {
     transform: scale(1);
   }
+}
+.gate1,
+.gate2 {
+  background-color: #724926;
 }

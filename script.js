@@ -23,6 +23,8 @@ const cocktail = [79];
 const x = [67];
 const progressBar = document.querySelector(".progress-inner");
 const anouncement = document.querySelector(".anouncement");
+const gate1 = 8;
+const gate2 = 9;
 
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
@@ -34,11 +36,14 @@ function createGrid() {
 }
 createGrid();
 
-// *** ADD TREES **
+// *** ADD TREES AND JURRASIC ENTRANCE**
 function addTrees() {
   trees.forEach((tree) => {
     addElement(tree, "trees");
   });
+
+  addElement(gate1, "gate1");
+  addElement(gate2, "gate2");
 }
 
 // ** ADD DRINKS **
@@ -53,6 +58,16 @@ function addDrinks() {
     addElement(cup, "coconut");
   });
   addElement(cocktail, "cocktail");
+  rum1.forEach((bottle) => {
+    addElement(bottle, "pulse");
+  });
+  rum2.forEach((bottle) => {
+    addElement(bottle, "pulse");
+  });
+  coconut.forEach((cup) => {
+    addElement(cup, "pulse");
+  });
+  addElement(cocktail, "pulse");
   addElement(x, "x");
 }
 
@@ -169,8 +184,9 @@ function addPoints() {
 }
 addPoints();
 
+// ** Progress Bar - When you get to 100 points **
 function sufficientlyDrunk() {
-  let timer = setInterval(() => {
+  let pointsTimer = setInterval(() => {
     if (score < 100) {
       progressBar.style.height = `${score}%`;
       anouncement.innerHTML = score;
@@ -185,14 +201,25 @@ function sufficientlyDrunk() {
     if (cells[pete].classList.contains("treasure")) {
       score = score + 20;
       removeElement(pete, "treasure");
-      console.log(`YOU GOT THE GOLD - ${score}`);
+      anouncement.innerHTML = `YOU GOT THE GOLD - ${score}`;
       //ADD IN THE WIN WHEN HE GOES TO THE JURASSIC GATES
+      clearInterval(pointsTimer);
+      win();
       //open the doors
-      clearInterval(timer);
     }
   }, 200);
 }
 sufficientlyDrunk();
+
+// ** Getting to the entrance - WINNING **
+function win() {
+  const winTimer = setInterval(() => {
+    if (cells[pete].classList.contains("gate1")) {
+      anouncement.innerHTML = "You have won!";
+      clearInterval(winTimer);
+    }
+  }, 200);
+}
 
 // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
 // to add! smooth the transition
