@@ -35,6 +35,7 @@ const mermaidText = [
 let m = 0;
 const jungleAmbience = document.querySelector(".jungleMusic");
 const soundEffect = document.querySelector(".soundEffect");
+const badGuy = document.querySelector(".badGuyImage");
 
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
@@ -145,27 +146,25 @@ function caught() {
   setInterval(() => {
     if (steveWalk[s] === pete) {
       pointsRemoved(10);
-      console.log(`Why hello there.. Can I come aboard.. \n score = ${score}`);
+      anouncement.innerText = `Why hello there.. Can I come aboard.. \n \nScore = ${score}`;
       soundEffect.src = "./sounds/speedoSteve.wav";
       soundEffect.play();
+      badGuy.src = "./images/speedoSteve.png";
     } else if (raptorWalk[r] === pete) {
       pointsRemoved(10);
-      console.log(
-        `RAHHHH Youre way too drunk to come to our beach party! Go home! \n score = ${score}`
-      );
+      anouncement.innerText = `RAHHHH Youre way too drunk to come to our beach party! Go home! \n \nScore = ${score}`;
       playSound("raptor");
+      badGuy.src = "./images/bouncer-raptor.png";
     } else if (explorerWalk[e] === pete) {
       pointsRemoved(5);
-      console.log(
-        `Hello mr pirate! What happened to your leg? Where are you going? How did you get so round? ... \n score = ${score}`
-      );
+      anouncement.innerText = `Hello mr pirate! What happened to your leg? Where are you going? How did you get so round? ... \n \nScore = ${score}`;
       playSound("littleExplorer");
+      badGuy.src = "./images/Explorer.png";
     } else if (davyWalk[dj] === pete) {
       pointsRemoved(5);
-      console.log(
-        `aaarrrrrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion! \n score = ${score}`
-      );
+      anouncement.innerText = `aaarrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion! \n \nScore = ${score}`;
       playSound("davyJones");
+      badGuy.src = "./images/DavyJones.png";
     }
   }, 200);
 }
@@ -173,23 +172,25 @@ caught();
 
 // ** collision with the rum **
 function addPoints() {
+  function add(points) {
+    score = score + points;
+    anouncement.innerText = `+ ${points} Points! \n \n ${score} Points in total`;
+    badGuy.src = "";
+    playSound("slurp");
+  }
   setInterval(() => {
     if (cells[pete].classList.contains("rum1")) {
-      score = score + 5;
+      add(5);
       removeElement(pete, "rum1");
-      playSound("slurp");
     } else if (cells[pete].classList.contains("rum2")) {
-      score = score + 10;
+      add(10);
       removeElement(pete, "rum2");
-      playSound("slurp");
     } else if (cells[pete].classList.contains("coconut")) {
-      score = score + 10;
+      add(10);
       removeElement(pete, "coconut");
-      playSound("slurp");
     } else if (cells[pete].classList.contains("cocktail")) {
-      score = score + 20;
+      add(20);
       removeElement(pete, "cocktail");
-      playSound("slurp");
     }
   }, 200);
 }
@@ -200,11 +201,10 @@ function sufficientlyDrunk() {
   let pointsTimer = setInterval(() => {
     if (score < 100) {
       progressBar.style.height = `${score}%`;
-      anouncement.innerHTML = score;
     } else {
       progressBar.style.height = "100%";
       anouncement.innerHTML =
-        "You are sufficiently drunk! Find the treasure and make your way to the paleo-pirate party!";
+        "You are sufficiently drunk! Find the treasure chest and make your way to the paleo-pirate party!";
       progressBar.classList.add("completelyDrunk");
       removeElement(x, "x");
       addElement(x, "treasure");
@@ -221,7 +221,7 @@ function treasure() {
     if (cells[pete].classList.contains("treasure")) {
       score = score + 20;
       removeElement(pete, "treasure");
-      anouncement.innerHTML = `YOU GOT THE GOLD - ${score}`;
+      anouncement.innerHTML = `You got the gold! And the doors have opened..`;
       //ADD IN THE WIN WHEN HE GOES TO THE JURASSIC GATES
       removeElement(gate1, "gate1");
       addElement(gate1, "openGates");
