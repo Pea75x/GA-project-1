@@ -58,16 +58,6 @@ function addDrinks() {
     addElement(cup, "coconut");
   });
   addElement(cocktail, "cocktail");
-  rum1.forEach((bottle) => {
-    addElement(bottle, "pulse");
-  });
-  rum2.forEach((bottle) => {
-    addElement(bottle, "pulse");
-  });
-  coconut.forEach((cup) => {
-    addElement(cup, "pulse");
-  });
-  addElement(cocktail, "pulse");
   addElement(x, "x");
 }
 

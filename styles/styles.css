@@ -56,18 +56,22 @@ img {
 .rum1 {
   background-image: url("../images/rum1.png");
   background-size: contain;
+  animation: pulse 1s ease infinite;
 }
 .rum2 {
   background-image: url("../images/rum2.png");
   background-size: contain;
+  animation: pulse 1s ease infinite;
 }
 .coconut {
   background-image: url("../images/coconut.png");
   background-size: contain;
+  animation: pulse 1s ease infinite;
 }
 .cocktail {
   background-image: url("../images/cocktail.png");
   background-size: contain;
+  animation: pulse 1s ease infinite;
 }
 .x {
   background-image: url("../images/x.png");
@@ -160,21 +164,11 @@ img {
     0 0 10px rgba(0, 0, 0, 0.377);
 }
 
-.pulse {
-  animation: pulse 2s ease infinite;
-}
-
 @keyframes pulse {
   0% {
     transform: scale(1);
   }
-  25% {
-    transform: scale(1.05);
-  }
   50% {
-    transform: scale(1);
-  }
-  75% {
     transform: scale(1.05);
   }
   100% {
