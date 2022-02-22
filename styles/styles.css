@@ -170,19 +170,23 @@ img {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.2),
     0 0 30px rgba(0, 0, 0, 0.1);
   margin-right: 70px;
+  transform: rotate(180deg);
 }
 .progress-inner {
   border-radius: 25px 25px 0 0;
   height: 0%;
   width: 100%;
   position: relative;
-  background-image: url("../images/alcoholLevel.webp");
+  background-image: url("../images/progressIncomplete.png");
+  background-position: bottom;
   transition: height 1s;
 }
 .completelyDrunk {
   border-radius: 25px;
   animation: pulse 1s ease infinite;
   border: 4px solid black;
+  background-image: url("../images/alcoholLevel.webp");
+  background-size: cover;
 }
 .drunknessLevel {
   margin: 10px 0;
