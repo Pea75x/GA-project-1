@@ -16,10 +16,10 @@ let s = 0;
 const steveWalk = [68, 78, 88, 98, 97, 96, 95, 96, 97, 98, 88, 78, 68];
 let dj = 0;
 const davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
-const rum1 = [50, 94, 55, 16];
-const rum2 = [34, 91, 99, 39];
-const coconut = [3, 86, 72, 30];
-const cocktail = [79];
+const rum1 = [1];
+const rum2 = [2];
+const coconut = [3];
+const cocktail = [4];
 const x = [67];
 const progressBar = document.querySelector(".progress-inner");
 const anouncement = document.querySelector(".anouncement");
@@ -35,11 +35,12 @@ const mermaidText = [
 let m = 0;
 const jungleAmbience = document.querySelector(".jungleMusic");
 const soundEffect = document.querySelector(".soundEffect");
-const badGuy = document.querySelector(".badGuyImage");
+const badGuy = document.querySelector("#image");
 const playButton = document.querySelector(".play");
 const pointsPanel = document.querySelector(".pointsPanel");
 const mermaidImage = document.querySelector(".mermaid");
 const speechImage = document.querySelector(".speechBubble");
+const losingImage = document.querySelector(".losingImage");
 
 pointsPanel.style.display = "none";
 mermaidImage.style.display = "none";
@@ -51,6 +52,7 @@ function playGame() {
   pointsPanel.style.display = "initial";
   mermaidImage.style.display = "initial";
   speechImage.style.display = "initial";
+  jungleAmbience.play();
 
   function createGrid() {
     for (let i = 0; i < gridCellCount; i++) {
@@ -61,8 +63,6 @@ function playGame() {
     }
   }
   createGrid();
-
-  jungleAmbience.play();
 
   function playSound(event) {
     soundEffect.src = `./sounds/${event}.mp3`;
@@ -206,9 +206,37 @@ function playGame() {
         add(20);
         removeElement(pete, "cocktail");
       }
-    }, 200);
+      if (
+        cells.some((cell) => cell.classList.contains("rum2")) === false &&
+        cells.some((cell) => cell.classList.contains("rum1")) === false &&
+        cells.some((cell) => cell.classList.contains("coconut")) === false &&
+        cells.some((cell) => cell.classList.contains("cocktail")) === false &&
+        score < 100
+      ) {
+        lose("rumsGone");
+      }
+      if (score < 0) {
+        lose("belowZero");
+      }
+    }, 100);
   }
   addPoints();
+
+  // ** HOW TO LOSE THE GAME **
+  function lose(howYouLost) {
+    playButton.style.display = "initial";
+    playButton.innerHTML = "Play Again?";
+    pointsPanel.style.display = "none";
+    speechImage.style.display = "none";
+    losingImage.classList.add(howYouLost);
+    grid.style.display = "none";
+    playButton.addEventListener("click", newPage);
+  }
+
+  // ** START AGAIN **
+  function newPage() {
+    window.location.reload(true);
+  }
 
   // ** Progress Bar - When you get to 100 points **
   function sufficientlyDrunk() {
