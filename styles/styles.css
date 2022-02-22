@@ -247,25 +247,25 @@ img {
   height: 70%;
   display: flex;
 }
-.playerPete {
+#playerPick {
   height: 100%;
   width: 50%;
-  background-image: url("../images/pirate.png");
   background-repeat: no-repeat;
-  background-size: contain;
 }
-.playerPete:hover {
+#playerPick:hover {
   transform: scale(1.1);
+}
+.playerPete {
+  background-image: url("../images/pirate.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: scale(1.2);
 }
 .playerMermaid {
-  height: 100%;
-  width: 50%;
   background-image: url("../images/mermaid.png");
-  background-repeat: no-repeat;
   background-size: contain;
-}
-.playerMermaid:hover {
-  transform: scale(1.1);
+  background-repeat: no-repeat;
+  transform: scale(1.2);
 }
 .losingImage {
   background-size: contain;

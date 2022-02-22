@@ -2,8 +2,8 @@ const grid = document.querySelector(".grid");
 const width = 10;
 const gridCellCount = width * width;
 const cells = [];
-let pete = 0;
 let score = 0;
+let player = 0;
 const trees = [
   7, 17, 27, 37, 36, 35, 33, 43, 42, 20, 21, 13, 14, 59, 58, 57, 66, 76, 77, 89,
   64, 74, 83, 62, 71, 61, 87,
@@ -43,8 +43,9 @@ const speechImage = document.querySelector(".speechBubble");
 const losingImage = document.querySelector(".losingImage");
 const lostSection = document.querySelector(".lostSection");
 const playerChoose = document.querySelector(".playerChoose");
-const player = document.querySelectorAll("#player");
+const playerPick = document.querySelectorAll("#playerPick");
 const pickPlease = document.querySelector(".pickPlease");
+let whichPlayer = 0;
 
 pointsPanel.style.display = "none";
 mermaidImage.style.display = "none";
@@ -52,7 +53,9 @@ speechImage.style.display = "none";
 lostSection.style.display = "none";
 
 // ** set everything into the play game function to start the game when youre ready **
-function playGame() {
+function playGame(event) {
+  whichPlayer = event.target.className;
+  console.log(whichPlayer);
   pickPlease.style.display = "none";
   playerChoose.style.display = "none";
   pointsPanel.style.display = "initial";
@@ -114,41 +117,41 @@ function playGame() {
   }
 
   // *** MOVE PETE ACROSS THE BOARD ***
-  addElement(0, "pete");
+  addElement(0, whichPlayer);
 
   function playerMove(event) {
-    const xPosition = pete % width;
-    const yPosition = Math.floor(pete / width);
+    const xPosition = player % width;
+    const yPosition = Math.floor(player / width);
     //left
     if (event.keyCode === 37) {
-      if (xPosition > 0 && !treeBash(pete - 1)) {
-        removeElement(pete, "pete");
-        pete--;
-        addElement(pete, "pete");
+      if (xPosition > 0 && !treeBash(player - 1)) {
+        removeElement(player, whichPlayer);
+        player--;
+        addElement(player, whichPlayer);
       }
     }
     //right
     if (event.keyCode === 39) {
-      if (xPosition < width - 1 && !treeBash(pete + 1)) {
-        removeElement(pete, "pete");
-        pete++;
-        addElement(pete, "pete");
+      if (xPosition < width - 1 && !treeBash(player + 1)) {
+        removeElement(player, whichPlayer);
+        player++;
+        addElement(player, whichPlayer);
       }
     }
     // up
     if (event.keyCode === 38) {
-      if (yPosition > 0 && !treeBash(pete - width)) {
-        removeElement(pete, "pete");
-        pete = pete - width;
-        addElement(pete, "pete");
+      if (yPosition > 0 && !treeBash(player - width)) {
+        removeElement(player, whichPlayer);
+        player = player - width;
+        addElement(player, whichPlayer);
       }
     }
     //down
     if (event.keyCode === 40) {
-      if (yPosition < width - 1 && !treeBash(pete + width)) {
-        removeElement(pete, "pete");
-        pete = pete + width;
-        addElement(pete, "pete");
+      if (yPosition < width - 1 && !treeBash(player + width)) {
+        removeElement(player, whichPlayer);
+        player = player + width;
+        addElement(player, whichPlayer);
       }
     }
   }
@@ -157,30 +160,30 @@ function playGame() {
   // ** collision with the bad guys **
   function pointsRemoved(points) {
     score = score - points;
-    removeElement(pete, "pete");
-    pete = 0;
-    addElement(pete, "pete");
+    removeElement(player, whichPlayer);
+    player = 0;
+    addElement(player, whichPlayer);
   }
 
   function caught() {
     setInterval(() => {
-      if (steveWalk[s] === pete) {
+      if (steveWalk[s] === player) {
         pointsRemoved(10);
         anouncement.innerText = `Why hello there.. Can I come aboard.. \n \nScore = ${score}`;
         soundEffect.src = "./sounds/speedoSteve.wav";
         soundEffect.play();
         badGuy.src = "./images/speedoSteve.png";
-      } else if (raptorWalk[r] === pete) {
+      } else if (raptorWalk[r] === player) {
         pointsRemoved(10);
         anouncement.innerText = `RAHHHH Youre way too drunk to come to our beach party! Go home! \n \nScore = ${score}`;
         playSound("raptor");
         badGuy.src = "./images/bouncer-raptor.png";
-      } else if (explorerWalk[e] === pete) {
+      } else if (explorerWalk[e] === player) {
         pointsRemoved(5);
         anouncement.innerText = `Hello mr pirate! What happened to your leg? Where are you going? How did you get so round? ... \n \nScore = ${score}`;
         playSound("littleExplorer");
         badGuy.src = "./images/Explorer.png";
-      } else if (davyWalk[dj] === pete) {
+      } else if (davyWalk[dj] === player) {
         pointsRemoved(5);
         anouncement.innerText = `aaarrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion! \n \nScore = ${score}`;
         playSound("davyJones");
@@ -199,18 +202,18 @@ function playGame() {
       playSound("slurp");
     }
     setInterval(() => {
-      if (cells[pete].classList.contains("rum1")) {
+      if (cells[player].classList.contains("rum1")) {
         add(5);
-        removeElement(pete, "rum1");
-      } else if (cells[pete].classList.contains("rum2")) {
+        removeElement(player, "rum1");
+      } else if (cells[player].classList.contains("rum2")) {
         add(10);
-        removeElement(pete, "rum2");
-      } else if (cells[pete].classList.contains("coconut")) {
+        removeElement(player, "rum2");
+      } else if (cells[player].classList.contains("coconut")) {
         add(10);
-        removeElement(pete, "coconut");
-      } else if (cells[pete].classList.contains("cocktail")) {
+        removeElement(player, "coconut");
+      } else if (cells[player].classList.contains("cocktail")) {
         add(20);
-        removeElement(pete, "cocktail");
+        removeElement(player, "cocktail");
       }
       if (
         cells.some((cell) => cell.classList.contains("rum2")) === false &&
@@ -265,9 +268,9 @@ function playGame() {
 
   function treasure() {
     let treasureTimer = setInterval(() => {
-      if (cells[pete].classList.contains("treasure")) {
+      if (cells[player].classList.contains("treasure")) {
         score = score + 20;
-        removeElement(pete, "treasure");
+        removeElement(player, "treasure");
         anouncement.innerHTML = `You got the gold! And the doors have opened..`;
         //ADD IN THE WIN WHEN HE GOES TO THE JURASSIC GATES
         removeElement(gate1, "gate1");
@@ -286,7 +289,7 @@ function playGame() {
   // ** Getting to the entrance - WINNING **
   function win() {
     const winTimer = setInterval(() => {
-      if (cells[pete].classList.contains("openGates")) {
+      if (cells[player].classList.contains("openGates")) {
         anouncement.innerHTML = "You have won!";
         soundEffect.src = `./sounds/win.wav`;
         soundEffect.play();
@@ -305,7 +308,7 @@ function playGame() {
         speechBubble.innerText = mermaidText[m];
         m = 0;
       }
-      if (cells[pete].classList.contains("openGates")) {
+      if (cells[player].classList.contains("openGates")) {
         speechBubble.innerHTML = "YAY you made it!";
         speechBubble.style.right = "45px";
         clearInterval(mermaidSpeech);
@@ -383,4 +386,4 @@ function playGame() {
   moveDavy();
 }
 
-player.forEach((button) => button.addEventListener("click", playGame));
+playerPick.forEach((button) => button.addEventListener("click", playGame));
