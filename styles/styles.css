@@ -225,9 +225,8 @@ img {
   top: 500px;
 }
 .play {
-  position: absolute;
-  left: 43%;
-  top: 400px;
+  width: 250px;
+  margin: auto;
   padding: 10px 20px;
   border: none;
   background-color: rgba(255, 255, 255, 0.151);
@@ -235,6 +234,38 @@ img {
 }
 .play:hover {
   background-color: rgba(255, 255, 255, 0.4);
+}
+.entryPage {
+  position: absolute;
+  left: 29%;
+  top: 130px;
+  width: 600px;
+  height: 500px;
+  text-align: center;
+}
+.playerChoose {
+  height: 70%;
+  display: flex;
+}
+.playerPete {
+  height: 100%;
+  width: 50%;
+  background-image: url("../images/pirate.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.playerPete:hover {
+  transform: scale(1.1);
+}
+.playerMermaid {
+  height: 100%;
+  width: 50%;
+  background-image: url("../images/mermaid.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.playerMermaid:hover {
+  transform: scale(1.1);
 }
 .losingImage {
   background-size: contain;

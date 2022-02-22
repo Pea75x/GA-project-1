@@ -16,10 +16,10 @@ let s = 0;
 const steveWalk = [68, 78, 88, 98, 97, 96, 95, 96, 97, 98, 88, 78, 68];
 let dj = 0;
 const davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
-const rum1 = [1, 10];
-const rum2 = [2];
-const coconut = [3, 5, 6, 15, 16, 25, 26];
-const cocktail = [4];
+const rum1 = [50, 94, 55, 16];
+const rum2 = [34, 91, 99, 39];
+const coconut = [3, 86, 72, 30];
+const cocktail = [79];
 const x = [67];
 const progressBar = document.querySelector(".progress-inner");
 const anouncement = document.querySelector(".anouncement");
@@ -41,14 +41,17 @@ const pointsPanel = document.querySelector(".pointsPanel");
 const mermaidImage = document.querySelector(".mermaid");
 const speechImage = document.querySelector(".speechBubble");
 const losingImage = document.querySelector(".losingImage");
+const lostSection = document.querySelector(".lostSection");
+const playerChoose = document.querySelector(".playerChoose");
 
 pointsPanel.style.display = "none";
 mermaidImage.style.display = "none";
 speechImage.style.display = "none";
+lostSection.style.display = "none";
 
 // ** set everything into the play game function to start the game when youre ready **
 function playGame() {
-  playButton.style.display = "none";
+  playerChoose.style.display = "none";
   pointsPanel.style.display = "initial";
   mermaidImage.style.display = "initial";
   speechImage.style.display = "initial";
@@ -224,8 +227,7 @@ function playGame() {
 
   // ** HOW TO LOSE THE GAME **
   function lose(howYouLost) {
-    playButton.style.display = "initial";
-    playButton.innerHTML = "Play Again?";
+    lostSection.style.display = "initial";
     pointsPanel.style.display = "none";
     speechImage.style.display = "none";
     losingImage.classList.add(howYouLost);
