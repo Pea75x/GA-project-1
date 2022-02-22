@@ -43,6 +43,8 @@ const speechImage = document.querySelector(".speechBubble");
 const losingImage = document.querySelector(".losingImage");
 const lostSection = document.querySelector(".lostSection");
 const playerChoose = document.querySelector(".playerChoose");
+const player = document.querySelectorAll("#player");
+const pickPlease = document.querySelector(".pickPlease");
 
 pointsPanel.style.display = "none";
 mermaidImage.style.display = "none";
@@ -51,6 +53,7 @@ lostSection.style.display = "none";
 
 // ** set everything into the play game function to start the game when youre ready **
 function playGame() {
+  pickPlease.style.display = "none";
   playerChoose.style.display = "none";
   pointsPanel.style.display = "initial";
   mermaidImage.style.display = "initial";
@@ -380,4 +383,4 @@ function playGame() {
   moveDavy();
 }
 
-playButton.addEventListener("click", playGame);
+player.forEach((button) => button.addEventListener("click", playGame));
