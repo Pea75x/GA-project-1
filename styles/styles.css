@@ -96,11 +96,6 @@ img {
   background-image: url("../images/treasure.png");
   background-size: contain;
 }
-.pete {
-  background-image: url("../images/pirate.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 .trees {
   background-image: url("../images/palmTree.png");
   background-size: contain;
@@ -109,7 +104,7 @@ img {
   background-image: url("../images/DavyJones.png");
   background-size: contain;
 }
-.mermaid {
+.sidekick {
   position: absolute;
   right: 180px;
   bottom: 0px;
@@ -253,7 +248,7 @@ img {
   background-repeat: no-repeat;
 }
 #playerPick:hover {
-  transform: scale(1.1);
+  transform: scale(1.3);
 }
 .playerPete {
   background-image: url("../images/pirate.png");
@@ -266,6 +261,9 @@ img {
   background-size: contain;
   background-repeat: no-repeat;
   transform: scale(1.2);
+}
+.pickPlease {
+  padding: 30px;
 }
 .losingImage {
   background-size: contain;

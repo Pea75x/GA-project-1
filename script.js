@@ -38,7 +38,7 @@ const soundEffect = document.querySelector(".soundEffect");
 const badGuy = document.querySelector("#image");
 const playButton = document.querySelector(".play");
 const pointsPanel = document.querySelector(".pointsPanel");
-const mermaidImage = document.querySelector(".mermaid");
+const sidekick = document.querySelector(".sidekick");
 const speechImage = document.querySelector(".speechBubble");
 const losingImage = document.querySelector(".losingImage");
 const lostSection = document.querySelector(".lostSection");
@@ -48,7 +48,7 @@ const pickPlease = document.querySelector(".pickPlease");
 let whichPlayer = 0;
 
 pointsPanel.style.display = "none";
-mermaidImage.style.display = "none";
+sidekick.style.display = "none";
 speechImage.style.display = "none";
 lostSection.style.display = "none";
 
@@ -59,9 +59,15 @@ function playGame(event) {
   pickPlease.style.display = "none";
   playerChoose.style.display = "none";
   pointsPanel.style.display = "initial";
-  mermaidImage.style.display = "initial";
+  sidekick.style.display = "initial";
   speechImage.style.display = "initial";
   jungleAmbience.play();
+
+  if (whichPlayer === "playerMermaid") {
+    sidekick.src = "./images/pirate.png";
+  } else if (whichPlayer === "playerPete") {
+    sidekick.src = "./images/mermaid.png";
+  }
 
   function createGrid() {
     for (let i = 0; i < gridCellCount; i++) {
