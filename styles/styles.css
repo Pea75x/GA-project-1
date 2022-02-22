@@ -173,7 +173,7 @@ img {
 }
 .progress-inner {
   border-radius: 25px 25px 0 0;
-  height: 20%;
+  height: 0%;
   width: 100%;
   position: relative;
   background-image: url("../images/alcoholLevel.webp");

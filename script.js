@@ -37,9 +37,20 @@ const jungleAmbience = document.querySelector(".jungleMusic");
 const soundEffect = document.querySelector(".soundEffect");
 const badGuy = document.querySelector(".badGuyImage");
 const playButton = document.querySelector(".play");
+const pointsPanel = document.querySelector(".pointsPanel");
+const mermaidImage = document.querySelector(".mermaid");
+const speechImage = document.querySelector(".speechBubble");
 
+pointsPanel.style.display = "none";
+mermaidImage.style.display = "none";
+speechImage.style.display = "none";
+
+// ** set everything into the play game function to start the game when youre ready **
 function playGame() {
   playButton.style.display = "none";
+  pointsPanel.style.display = "initial";
+  mermaidImage.style.display = "initial";
+  speechImage.style.display = "initial";
 
   function createGrid() {
     for (let i = 0; i < gridCellCount; i++) {
