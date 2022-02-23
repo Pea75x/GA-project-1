@@ -27,6 +27,14 @@ body {
   height: 710px;
   background-position: center;
 }
+.level2scroll {
+  background-image: url("../images/myMap2.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 1000px;
+  height: 710px;
+  background-position: center;
+}
 .header-wrapper {
   height: 130px;
   display: flex;
@@ -362,4 +370,10 @@ body {
   .badGuyImage {
     display: none;
   }
+}
+.lava {
+  background-image: url("../images/lava.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: pulse 1s ease infinite;
 }

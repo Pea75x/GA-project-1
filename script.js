@@ -4,35 +4,17 @@ const gridCellCount = width * width;
 const cells = [];
 let score = 0;
 let player = 0;
-const trees = [
-  7, 17, 27, 37, 36, 35, 33, 43, 42, 20, 21, 13, 14, 59, 58, 57, 66, 76, 77, 89,
-  64, 74, 83, 62, 71, 61, 87,
-];
 let r = 0;
-const raptorWalk = [28, 38, 48, 47, 46, 45, 46, 47, 48, 38, 28];
 let e = 0;
-const explorerWalk = [22, 12, 2, 3, 4, 5, 15, 25, 24, 23];
 let s = 0;
-const steveWalk = [68, 78, 88, 98, 97, 96, 95, 96, 97, 98, 88, 78, 68];
 let dj = 0;
-const davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
-const rum1 = [50, 94, 55, 16];
-const rum2 = [34, 91, 99, 39];
-const coconut = [3, 86, 72, 30];
-const cocktail = [79];
-const x = [67];
+let m = 0;
+let whichPlayer = 0;
 const progressBar = document.querySelector(".progress-inner");
 const anouncement = document.querySelector(".anouncement");
 const gate1 = 8;
 const gate2 = 9;
 const speechBubble = document.querySelector(".speechBubbleText");
-const mermaidText = [
-  "Watch out for Speedo Steve! \nHis unwanted pervyness will sober you up!",
-  "Dont let the Bouncer-Raptor catch you! \nHe will send you home!",
-  "This Paleo-Pirate party is so fun! You're missing out!",
-  "Curious Kevin is out on an expedition today! Dont get caught up in his endless questions..",
-];
-let m = 0;
 const jungleAmbience = document.querySelector(".jungleMusic");
 const soundEffect = document.querySelector(".soundEffect");
 const badGuy = document.querySelector("#image");
@@ -45,12 +27,47 @@ const lostSection = document.querySelector(".lostSection");
 const playerChoose = document.querySelector(".playerChoose");
 const playerPick = document.querySelectorAll("#playerPick");
 const pickPlease = document.querySelector(".pickPlease");
-let whichPlayer = 0;
-
+const scroll = document.querySelector("#scroll");
+let trees = [
+  7, 17, 27, 37, 36, 35, 33, 43, 42, 20, 21, 13, 14, 59, 58, 57, 66, 76, 77, 89,
+  64, 74, 83, 62, 71, 61, 87,
+];
+let raptorWalk = [28, 38, 48, 47, 46, 45, 46, 47, 48, 38, 28];
+let explorerWalk = [22, 12, 2, 3, 4, 5, 15, 25, 24, 23];
+let steveWalk = [68, 78, 88, 98, 97, 96, 95, 96, 97, 98, 88, 78, 68];
+let davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
+let rum1 = [1, 2, 4, 5];
+let rum2 = [6, 16, 26, 25];
+let coconut = [3, 24, 23, 34];
+let cocktail = [79];
+let x = [10];
+const mermaidText = [
+  "Watch out for Speedo Steve! \nHis unwanted pervyness will sober you up!",
+  "Dont let the Bouncer-Raptor catch you! \nHe will send you home!",
+  "This Paleo-Pirate party is so fun! You're missing out!",
+  "Curious Kevin is out on an expedition today! Dont get caught up in his endless questions..",
+];
 pointsPanel.style.display = "none";
 sidekick.style.display = "none";
 speechImage.style.display = "none";
 lostSection.style.display = "none";
+
+function createGrid() {
+  for (let i = 0; i < gridCellCount; i++) {
+    const cell = document.createElement("div");
+    cell.setAttribute("data-id", i);
+    cells.push(cell);
+    grid.appendChild(cell);
+  }
+}
+
+// *** ADD OR REMOVE ANY ELEMENT **
+function addElement(position, object) {
+  cells[position].classList.add(object);
+}
+function removeElement(position, object) {
+  cells[position].classList.remove(object);
+}
 
 // ** set everything into the play game function to start the game when youre ready **
 function playGame(event) {
@@ -67,15 +84,6 @@ function playGame(event) {
   } else if (whichPlayer === "playerPete") {
     sidekick.src = "./images/mermaid.png";
   }
-
-  function createGrid() {
-    for (let i = 0; i < gridCellCount; i++) {
-      const cell = document.createElement("div");
-      cell.setAttribute("data-id", i);
-      cells.push(cell);
-      grid.appendChild(cell);
-    }
-  }
   createGrid();
 
   function playSound(event) {
@@ -83,7 +91,7 @@ function playGame(event) {
     soundEffect.play();
   }
 
-  // *** ADD TREES AND JURRASIC ENTRANCE**
+  // *** ADD TREES,JURRASIC ENTRANCE AND DRINKS**
   function addTrees() {
     trees.forEach((tree) => {
       addElement(tree, "trees");
@@ -93,7 +101,6 @@ function playGame(event) {
     addElement(gate2, "gate2");
   }
 
-  // ** ADD DRINKS **
   function addDrinks() {
     rum1.forEach((bottle) => {
       addElement(bottle, "rum1");
@@ -108,17 +115,34 @@ function playGame(event) {
     addElement(x, "x");
   }
 
+  //** REMOVE TREES DRINKS AND ENTRANCE */
+  function removeTrees() {
+    trees.forEach((tree) => {
+      removeElement(tree, "trees");
+    });
+
+    removeElement(gate1, "openGates");
+    removeElement(gate2, "openGates");
+  }
+
+  // ** ADD DRINKS **
+  function removeDrinks() {
+    rum1.forEach((bottle) => {
+      removeElement(bottle, "rum1");
+    });
+    rum2.forEach((bottle) => {
+      removeElement(bottle, "rum2");
+    });
+    coconut.forEach((cup) => {
+      removeElement(cup, "coconut");
+    });
+    removeElement(cocktail, "cocktail");
+    removeElement(x, "x");
+  }
+
   // *** COLLISION DETECTION ***
   function treeBash(futurePosition) {
     return trees.includes(futurePosition);
-  }
-
-  // *** ADD OR REMOVE ANY ELEMENT **
-  function addElement(position, object) {
-    cells[position].classList.add(object);
-  }
-  function removeElement(position, object) {
-    cells[position].classList.remove(object);
   }
 
   // *** MOVE PETE ACROSS THE BOARD ***
@@ -171,7 +195,7 @@ function playGame(event) {
   }
 
   function caught() {
-    setInterval(() => {
+    const caughtTimer = setInterval(() => {
       if (steveWalk[s] === player) {
         pointsRemoved(10);
         anouncement.innerText = `Why hello there.. Can I come aboard.. \n \nScore = ${score}`;
@@ -193,6 +217,9 @@ function playGame(event) {
         anouncement.innerText = `aaarrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion! \n \nScore = ${score}`;
         playSound("davyJones");
         badGuy.src = "./images/DavyJones.png";
+      }
+      if (cells[player].classList.contains("openGates")) {
+        clearInterval(caughtTimer);
       }
     }, 100);
   }
@@ -220,23 +247,10 @@ function playGame(event) {
         add(20);
         removeElement(player, "cocktail");
       }
-      if (
-        cells.some((cell) => cell.classList.contains("rum2")) === false &&
-        cells.some((cell) => cell.classList.contains("rum1")) === false &&
-        cells.some((cell) => cell.classList.contains("coconut")) === false &&
-        cells.some((cell) => cell.classList.contains("cocktail")) === false &&
-        score < 100
-      ) {
-        lose("rumsGone");
-      }
-      if (score < 0) {
-        lose("belowZero");
-      }
     }, 100);
   }
   addPoints();
 
-  // ** HOW TO LOSE THE GAME **
   function lose(howYouLost) {
     lostSection.style.display = "initial";
     pointsPanel.style.display = "none";
@@ -268,15 +282,6 @@ function playGame(event) {
         clearInterval(pointsTimer);
         treasure();
       }
-      if (
-        cells.some((cell) => cell.classList.contains("rum2")) === false &&
-        cells.some((cell) => cell.classList.contains("rum1")) === false &&
-        cells.some((cell) => cell.classList.contains("coconut")) === false &&
-        cells.some((cell) => cell.classList.contains("cocktail")) === false &&
-        score < 100
-      ) {
-        lose("rumsGone");
-      }
     }, 200);
   }
   sufficientlyDrunk();
@@ -293,23 +298,23 @@ function playGame(event) {
         addElement(gate2, "openGates");
         playSound("door");
         clearInterval(treasureTimer);
-        win();
       }
     }, 200);
   }
 
-  //open the doors
-
   // ** Getting to the entrance - WINNING **
   function win() {
-    const winTimer = setInterval(() => {
-      if (cells[player].classList.contains("openGates")) {
-        anouncement.innerHTML = "You have won!";
-        soundEffect.src = `./sounds/win.wav`;
-        soundEffect.play();
-        clearInterval(winTimer);
-      }
-    }, 200);
+    anouncement.innerHTML = "Time to party!";
+    soundEffect.src = `./sounds/win.wav`;
+    soundEffect.play();
+    removeDrinks();
+    removeTrees();
+    removeElement(player, whichPlayer);
+    removeElement(steveWalk[s], "speedoSteve");
+    removeElement(raptorWalk[r], "raptor");
+    removeElement(explorerWalk[e], "explorer");
+    removeElement(davyWalk[dj], "davy");
+    level2(whichPlayer);
   }
 
   //** Mermaid speech */
@@ -318,7 +323,7 @@ function playGame(event) {
       if (m < mermaidText.length - 1) {
         speechBubble.innerText = mermaidText[m];
         m++;
-      } else {
+      } else if ((m = mermaidText.length - 1)) {
         speechBubble.innerText = mermaidText[m];
         m = 0;
       }
@@ -332,9 +337,10 @@ function playGame(event) {
   mermaid();
 
   // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
-  // to add! smooth the transition
-  function moveSpeedoSteve() {
-    setInterval(() => {
+  // could put them all in a set interval together but then they would all move at the same speed?
+  function gameTimer() {
+    let badGuyTimer = setInterval(() => {
+      //** MOVE SPEEDO STEVE */
       if (s < steveWalk.length - 1) {
         removeElement(steveWalk[s], "speedoSteve");
         s++;
@@ -344,12 +350,7 @@ function playGame(event) {
         s = 0;
         addElement(steveWalk[s], "speedoSteve");
       }
-    }, 500);
-  }
-
-  // **** BOUNCERAPTER MOVING ACROSS THE BOARD ******
-  function moveRaptor() {
-    setInterval(() => {
+      //** MOVE RAPTOR */
       if (r < raptorWalk.length - 1) {
         removeElement(raptorWalk[r], "raptor");
         r++;
@@ -359,12 +360,7 @@ function playGame(event) {
         r = 0;
         addElement(raptorWalk[r], "raptor");
       }
-    }, 700);
-  }
-
-  // **** EXPLORER MOVING ACROSS THE BOARD ******
-  function moveExplorer() {
-    setInterval(() => {
+      //** MOVE EXPLORER */
       if (e < explorerWalk.length - 1) {
         removeElement(explorerWalk[e], "explorer");
         e++;
@@ -374,12 +370,7 @@ function playGame(event) {
         e = 0;
         addElement(explorerWalk[e], "explorer");
       }
-    }, 800);
-  }
-
-  // **** DAVY MOVING ACROSS THE BOARD ******
-  function moveDavy() {
-    setInterval(() => {
+      //** MOVE DAVY JONES */
       if (dj < davyWalk.length - 1) {
         removeElement(davyWalk[dj], "davy");
         dj++;
@@ -389,15 +380,70 @@ function playGame(event) {
         dj = 0;
         addElement(davyWalk[dj], "davy");
       }
-    }, 600);
+      // ** HOW TO LOSE THE GAME **
+      if (
+        cells.some((cell) => cell.classList.contains("rum2")) === false &&
+        cells.some((cell) => cell.classList.contains("rum1")) === false &&
+        cells.some((cell) => cell.classList.contains("coconut")) === false &&
+        cells.some((cell) => cell.classList.contains("cocktail")) === false &&
+        score < 100
+      ) {
+        lose("rumsGone");
+      }
+      if (score < 0) {
+        lose("belowZero");
+      }
+      // ** STOPS THE GAME IF YOU WIN **
+      if (cells[player].classList.contains("openGates")) {
+        clearInterval(badGuyTimer);
+        win();
+      }
+    }, 500);
   }
 
   addDrinks();
   addTrees();
-  moveSpeedoSteve();
-  moveRaptor();
-  moveExplorer();
-  moveDavy();
+  gameTimer();
 }
 
 playerPick.forEach((button) => button.addEventListener("click", playGame));
+
+function level2(samePlayer) {
+  score = 0;
+  player = 0;
+  rum1 = [24, 34, 44];
+  rum2 = [99, 98, 97];
+  coconut = [4, 5];
+  x = 15;
+  trees = [
+    1, 11, 13, 24, 34, 33, 31, 51, 52, 55, 56, 47, 36, 38, 28, 17, 7, 78, 68,
+    58, 87, 76, 80, 81, 84, 73, 95,
+  ];
+  const lava = 72;
+
+  // *** MOVE PETE ACROSS THE BOARD ***
+  addElement(score, samePlayer);
+
+  scroll.classList.remove("scroll");
+  scroll.classList.add("level2scroll");
+
+  function addTrees() {
+    trees.forEach((tree) => {
+      addElement(tree, "trees");
+    });
+
+    addElement(gate1, "gate1");
+    addElement(gate2, "gate2");
+  }
+  function lavaFlow() {
+    setInterval(() => {
+      if (cells[lava].classList.contains("lava")) {
+        removeElement(lava, "lava");
+      } else {
+        addElement(lava, "lava");
+      }
+    }, 3000);
+  }
+  lavaFlow();
+  addTrees();
+}
