@@ -69,7 +69,124 @@ function removeElement(position, object) {
   cells[position].classList.remove(object);
 }
 
-// ** set everything into the play game function to start the game when youre ready **
+// *** SOUND EFFECTS **
+function playSound(event) {
+  soundEffect.src = `./sounds/${event}.mp3`;
+  soundEffect.play();
+}
+// ** STAGE 1 - GET DRUNKOMETER UP TO 100 ***
+function sufficientlyDrunk() {
+  let pointsTimer = setInterval(() => {
+    if (score < 100) {
+      progressBar.style.height = `${score}%`;
+    } else {
+      progressBar.style.height = "100%";
+      anouncement.innerHTML =
+        "You are sufficiently drunk! Find the treasure chest and make your way to the paleo-pirate party!";
+      progressBar.classList.add("completelyDrunk");
+      removeElement(x, "x");
+      addElement(x, "treasure");
+      playSound("treasure");
+      clearInterval(pointsTimer);
+      treasure();
+    }
+  }, 200);
+}
+// *** STAGE 2- GET TREASURE ****
+function treasure() {
+  let treasureTimer = setInterval(() => {
+    if (cells[player].classList.contains("treasure")) {
+      removeElement(player, "treasure");
+      anouncement.innerHTML = `You got the gold! And the doors have opened..`;
+      //ADD IN THE WIN WHEN HE GOES TO THE JURASSIC GATES
+      removeElement(gate1, "gate1");
+      addElement(gate1, "openGates");
+      removeElement(gate2, "gate2");
+      addElement(gate2, "openGates");
+      playSound("door");
+      clearInterval(treasureTimer);
+    }
+  }, 200);
+}
+
+// ** STAGE 3 - GET TO ENTRANCE - WINNING **
+function win() {
+  anouncement.innerHTML = "Time to party!";
+  soundEffect.src = `./sounds/win.wav`;
+  soundEffect.play();
+  removeDrinks();
+  removeTrees();
+  removeElement(player, whichPlayer);
+  removeElement(steveWalk[s], "speedoSteve");
+  removeElement(raptorWalk[r], "raptor");
+  removeElement(explorerWalk[e], "explorer");
+  removeElement(davyWalk[dj], "davy");
+  progressBar.classList.remove("completelyDrunk");
+  level2(whichPlayer);
+}
+// *** ADD TREES,JURRASIC ENTRANCE AND DRINKS**
+function addTrees() {
+  trees.forEach((tree) => {
+    addElement(tree, "trees");
+  });
+
+  addElement(gate1, "gate1");
+  addElement(gate2, "gate2");
+}
+
+function addDrinks() {
+  rum1.forEach((bottle) => {
+    addElement(bottle, "rum1");
+  });
+  rum2.forEach((bottle) => {
+    addElement(bottle, "rum2");
+  });
+  coconut.forEach((cup) => {
+    addElement(cup, "coconut");
+  });
+  addElement(cocktail, "cocktail");
+  addElement(x, "x");
+}
+
+//** REMOVE TREES DRINKS AND ENTRANCE */
+function removeTrees() {
+  trees.forEach((tree) => {
+    removeElement(tree, "trees");
+  });
+
+  removeElement(gate1, "openGates");
+  removeElement(gate2, "openGates");
+}
+
+// ** ADD DRINKS **
+function removeDrinks() {
+  rum1.forEach((bottle) => {
+    removeElement(bottle, "rum1");
+  });
+  rum2.forEach((bottle) => {
+    removeElement(bottle, "rum2");
+  });
+  coconut.forEach((cup) => {
+    removeElement(cup, "coconut");
+  });
+  removeElement(cocktail, "cocktail");
+  removeElement(x, "x");
+}
+function lose(howYouLost) {
+  lostSection.style.display = "initial";
+  pointsPanel.style.display = "none";
+  speechImage.style.display = "none";
+  badGuy.style.display = "none";
+  losingImage.classList.add(howYouLost);
+  grid.style.display = "none";
+  playButton.addEventListener("click", newPage);
+}
+// ** START AGAIN **
+function newPage() {
+  window.location.reload(true);
+}
+
+// ** set some stuff into the play game function to start the game when youre ready **
 function playGame(event) {
   whichPlayer = event.target.className;
   pickPlease.style.display = "none";
@@ -85,60 +202,6 @@ function playGame(event) {
     sidekick.src = "./images/mermaid.png";
   }
   createGrid();
-
-  function playSound(event) {
-    soundEffect.src = `./sounds/${event}.mp3`;
-    soundEffect.play();
-  }
-
-  // *** ADD TREES,JURRASIC ENTRANCE AND DRINKS**
-  function addTrees() {
-    trees.forEach((tree) => {
-      addElement(tree, "trees");
-    });
-
-    addElement(gate1, "gate1");
-    addElement(gate2, "gate2");
-  }
-
-  function addDrinks() {
-    rum1.forEach((bottle) => {
-      addElement(bottle, "rum1");
-    });
-    rum2.forEach((bottle) => {
-      addElement(bottle, "rum2");
-    });
-    coconut.forEach((cup) => {
-      addElement(cup, "coconut");
-    });
-    addElement(cocktail, "cocktail");
-    addElement(x, "x");
-  }
-
-  //** REMOVE TREES DRINKS AND ENTRANCE */
-  function removeTrees() {
-    trees.forEach((tree) => {
-      removeElement(tree, "trees");
-    });
-
-    removeElement(gate1, "openGates");
-    removeElement(gate2, "openGates");
-  }
-
-  // ** ADD DRINKS **
-  function removeDrinks() {
-    rum1.forEach((bottle) => {
-      removeElement(bottle, "rum1");
-    });
-    rum2.forEach((bottle) => {
-      removeElement(bottle, "rum2");
-    });
-    coconut.forEach((cup) => {
-      removeElement(cup, "coconut");
-    });
-    removeElement(cocktail, "cocktail");
-    removeElement(x, "x");
-  }
 
   // *** COLLISION DETECTION ***
   function treeBash(futurePosition) {
@@ -195,7 +258,7 @@ function playGame(event) {
   }
 
   function caught() {
-    const caughtTimer = setInterval(() => {
+    setInterval(() => {
       if (steveWalk[s] === player) {
         pointsRemoved(10);
         anouncement.innerText = `Why hello there.. Can I come aboard.. \n \nScore = ${score}`;
@@ -217,9 +280,6 @@ function playGame(event) {
         anouncement.innerText = `aaarrrrr ye off to the beach party? Without me! Ye lily-livered Rapscallion! \n \nScore = ${score}`;
         playSound("davyJones");
         badGuy.src = "./images/DavyJones.png";
-      }
-      if (cells[player].classList.contains("openGates")) {
-        clearInterval(caughtTimer);
       }
     }, 100);
   }
@@ -251,72 +311,6 @@ function playGame(event) {
   }
   addPoints();
 
-  function lose(howYouLost) {
-    lostSection.style.display = "initial";
-    pointsPanel.style.display = "none";
-    speechImage.style.display = "none";
-    badGuy.style.display = "none";
-    losingImage.classList.add(howYouLost);
-    grid.style.display = "none";
-    playButton.addEventListener("click", newPage);
-  }
-
-  // ** START AGAIN **
-  function newPage() {
-    window.location.reload(true);
-  }
-
-  // ** Progress Bar - When you get to 100 points **
-  function sufficientlyDrunk() {
-    let pointsTimer = setInterval(() => {
-      if (score < 100) {
-        progressBar.style.height = `${score}%`;
-      } else {
-        progressBar.style.height = "100%";
-        anouncement.innerHTML =
-          "You are sufficiently drunk! Find the treasure chest and make your way to the paleo-pirate party!";
-        progressBar.classList.add("completelyDrunk");
-        removeElement(x, "x");
-        addElement(x, "treasure");
-        playSound("treasure");
-        clearInterval(pointsTimer);
-        treasure();
-      }
-    }, 200);
-  }
-  sufficientlyDrunk();
-
-  function treasure() {
-    let treasureTimer = setInterval(() => {
-      if (cells[player].classList.contains("treasure")) {
-        removeElement(player, "treasure");
-        anouncement.innerHTML = `You got the gold! And the doors have opened..`;
-        //ADD IN THE WIN WHEN HE GOES TO THE JURASSIC GATES
-        removeElement(gate1, "gate1");
-        addElement(gate1, "openGates");
-        removeElement(gate2, "gate2");
-        addElement(gate2, "openGates");
-        playSound("door");
-        clearInterval(treasureTimer);
-      }
-    }, 200);
-  }
-
-  // ** Getting to the entrance - WINNING **
-  function win() {
-    anouncement.innerHTML = "Time to party!";
-    soundEffect.src = `./sounds/win.wav`;
-    soundEffect.play();
-    removeDrinks();
-    removeTrees();
-    removeElement(player, whichPlayer);
-    removeElement(steveWalk[s], "speedoSteve");
-    removeElement(raptorWalk[r], "raptor");
-    removeElement(explorerWalk[e], "explorer");
-    removeElement(davyWalk[dj], "davy");
-    level2(whichPlayer);
-  }
-
   //** Mermaid speech */
   function mermaid() {
     const mermaidSpeech = setInterval(() => {
@@ -335,6 +329,7 @@ function playGame(event) {
     }, 5000);
   }
   mermaid();
+  sufficientlyDrunk();
 
   // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
   // could put them all in a set interval together but then they would all move at the same speed?
@@ -408,33 +403,40 @@ function playGame(event) {
 
 playerPick.forEach((button) => button.addEventListener("click", playGame));
 
+//***** LEVEL 2 *******/
 function level2(samePlayer) {
   score = 0;
   player = 0;
-  rum1 = [24, 34, 44];
-  rum2 = [99, 98, 97];
-  coconut = [4, 5];
-  x = 15;
+  rum1 = [6, 37, 94, 89];
+  rum2 = [14, 64, 77, 90];
+  coconut = [23, 46, 60];
+  cocktail = [57];
+  x = 91;
   trees = [
     1, 11, 13, 24, 34, 33, 31, 51, 52, 55, 56, 47, 36, 38, 28, 17, 7, 78, 68,
     58, 87, 76, 80, 81, 84, 73, 95,
   ];
   const lava = 72;
+  raptorWalk = [19, 29, 39, 49, 59, 69, 79, 69, 59, 49, 39, 29, 19];
+  steveWalk = [2, 3, 4, 5, 6, 16, 26, 27, 26, 16, 6, 5, 4, 3, 2];
+  explorerWalk = [32, 42, 41, 40, 30, 20, 21, 22];
+  r = 0;
+  e = 0;
+  s = 0;
 
-  // *** MOVE PETE ACROSS THE BOARD ***
+  // *** ADD PLAYER TO THE BOARD ***
   addElement(score, samePlayer);
 
+  //** CHANGE MAP TO THE HARDER LEVEL */
   scroll.classList.remove("scroll");
   scroll.classList.add("level2scroll");
 
-  function addTrees() {
-    trees.forEach((tree) => {
-      addElement(tree, "trees");
-    });
+  // ** ADD TREES, DRINKS, BADGUYS, LAVA TO THE MAP **
+  lavaFlow();
+  addTrees();
+  addDrinks();
 
-    addElement(gate1, "gate1");
-    addElement(gate2, "gate2");
-  }
+  //** ADD BAD GUYS AND LAVA */
   function lavaFlow() {
     setInterval(() => {
       if (cells[lava].classList.contains("lava")) {
@@ -444,6 +446,59 @@ function level2(samePlayer) {
       }
     }, 3000);
   }
-  lavaFlow();
-  addTrees();
+  function game2Timer() {
+    let level2Timer = setInterval(() => {
+      //** MOVE SPEEDO STEVE */
+      if (s < steveWalk.length - 1) {
+        // s < 8 - 1
+        removeElement(steveWalk[s], "speedoSteve");
+        s++;
+        addElement(steveWalk[s], "speedoSteve");
+      } else {
+        removeElement(steveWalk[s], "speedoSteve");
+        s = 0;
+        addElement(steveWalk[s], "speedoSteve");
+      }
+      //** MOVE RAPTOR */
+      if (r < raptorWalk.length - 1) {
+        removeElement(raptorWalk[r], "raptor");
+        r++;
+        addElement(raptorWalk[r], "raptor");
+      } else {
+        removeElement(raptorWalk[r], "raptor");
+        r = 0;
+        addElement(raptorWalk[r], "raptor");
+      }
+      //** MOVE EXPLORER */
+      if (e < explorerWalk.length - 1) {
+        removeElement(explorerWalk[e], "explorer");
+        e++;
+        addElement(explorerWalk[e], "explorer");
+      } else {
+        removeElement(explorerWalk[e], "explorer");
+        e = 0;
+        addElement(explorerWalk[e], "explorer");
+      }
+      // ** HOW TO LOSE THE GAME **
+      if (
+        cells.some((cell) => cell.classList.contains("rum2")) === false &&
+        cells.some((cell) => cell.classList.contains("rum1")) === false &&
+        cells.some((cell) => cell.classList.contains("coconut")) === false &&
+        cells.some((cell) => cell.classList.contains("cocktail")) === false &&
+        score < 100
+      ) {
+        lose("rumsGone");
+      }
+      if (score < 0) {
+        lose("belowZero");
+      }
+      // ** STOPS THE GAME IF YOU WIN **
+      if (cells[player].classList.contains("openGates")) {
+        clearInterval(level2Timer);
+        win();
+      }
+    }, 500);
+  }
+  game2Timer();
+  sufficientlyDrunk();
 }
