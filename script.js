@@ -117,10 +117,18 @@ function win() {
   removeDrinks();
   removeTrees();
   removeElement(player, whichPlayer);
-  removeElement(steveWalk[s], "speedoSteve");
-  removeElement(raptorWalk[r], "raptor");
-  removeElement(explorerWalk[e], "explorer");
-  removeElement(davyWalk[dj], "davy");
+  steveWalk.forEach((steve) => {
+    removeElement(steve, "speedoSteve");
+  });
+  raptorWalk.forEach((raptor) => {
+    removeElement(raptor, "raptor");
+  });
+  explorerWalk.forEach((explorer) => {
+    removeElement(explorer, "explorer");
+  });
+  davyWalk.forEach((davy) => {
+    removeElement(davy, "davy");
+  });
   progressBar.classList.remove("completelyDrunk");
   level2(whichPlayer);
 }
@@ -186,6 +194,14 @@ function newPage() {
   window.location.reload(true);
 }
 
+// ** collision with the bad guys **
+function pointsRemoved(points) {
+  score = score - points;
+  removeElement(player, whichPlayer);
+  player = 0;
+  addElement(player, whichPlayer);
+}
+
 // ** set some stuff into the play game function to start the game when youre ready **
 function playGame(event) {
   whichPlayer = event.target.className;
@@ -248,14 +264,6 @@ function playGame(event) {
     }
   }
   document.addEventListener("keyup", playerMove);
-
-  // ** collision with the bad guys **
-  function pointsRemoved(points) {
-    score = score - points;
-    removeElement(player, whichPlayer);
-    player = 0;
-    addElement(player, whichPlayer);
-  }
 
   function caught() {
     setInterval(() => {
@@ -423,6 +431,7 @@ function level2(samePlayer) {
   r = 0;
   e = 0;
   s = 0;
+  dj = null;
 
   // *** ADD PLAYER TO THE BOARD ***
   addElement(score, samePlayer);
@@ -431,12 +440,12 @@ function level2(samePlayer) {
   scroll.classList.remove("scroll");
   scroll.classList.add("level2scroll");
 
-  // ** ADD TREES, DRINKS, BADGUYS, LAVA TO THE MAP **
+  // ** ADD TREES, DRINKS, LAVA TO THE MAP **
   lavaFlow();
   addTrees();
   addDrinks();
 
-  //** ADD BAD GUYS AND LAVA */
+  //** ADD LAVA */
   function lavaFlow() {
     setInterval(() => {
       if (cells[lava].classList.contains("lava")) {
@@ -444,8 +453,15 @@ function level2(samePlayer) {
       } else {
         addElement(lava, "lava");
       }
+      if (player === lava) {
+        playSound("fire");
+        pointsRemoved(10);
+        anouncement.innerText = `OOOUCHH! Watch out for the lava! \n \nScore = ${score}`;
+        badGuy.src = "./images/volcano.png";
+      }
     }, 3000);
   }
+
   function game2Timer() {
     let level2Timer = setInterval(() => {
       //** MOVE SPEEDO STEVE */
