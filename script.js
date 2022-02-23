@@ -55,7 +55,6 @@ lostSection.style.display = "none";
 // ** set everything into the play game function to start the game when youre ready **
 function playGame(event) {
   whichPlayer = event.target.className;
-  console.log(whichPlayer);
   pickPlease.style.display = "none";
   playerChoose.style.display = "none";
   pointsPanel.style.display = "initial";
@@ -195,7 +194,7 @@ function playGame(event) {
         playSound("davyJones");
         badGuy.src = "./images/DavyJones.png";
       }
-    }, 200);
+    }, 100);
   }
   caught();
 
@@ -242,6 +241,7 @@ function playGame(event) {
     lostSection.style.display = "initial";
     pointsPanel.style.display = "none";
     speechImage.style.display = "none";
+    badGuy.style.display = "none";
     losingImage.classList.add(howYouLost);
     grid.style.display = "none";
     playButton.addEventListener("click", newPage);
@@ -268,6 +268,15 @@ function playGame(event) {
         clearInterval(pointsTimer);
         treasure();
       }
+      if (
+        cells.some((cell) => cell.classList.contains("rum2")) === false &&
+        cells.some((cell) => cell.classList.contains("rum1")) === false &&
+        cells.some((cell) => cell.classList.contains("coconut")) === false &&
+        cells.some((cell) => cell.classList.contains("cocktail")) === false &&
+        score < 100
+      ) {
+        lose("rumsGone");
+      }
     }, 200);
   }
   sufficientlyDrunk();
@@ -275,7 +284,6 @@ function playGame(event) {
   function treasure() {
     let treasureTimer = setInterval(() => {
       if (cells[player].classList.contains("treasure")) {
-        score = score + 20;
         removeElement(player, "treasure");
         anouncement.innerHTML = `You got the gold! And the doors have opened..`;
         //ADD IN THE WIN WHEN HE GOES TO THE JURASSIC GATES
