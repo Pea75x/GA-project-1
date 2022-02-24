@@ -439,6 +439,7 @@ function level2(samePlayer) {
   mermaidText.push(
     "You should never trust a volcano, they erupt to no good at all."
   );
+  mermaidText.push("Stay away from Count Scapula, he's off his head!");
 
   // *** ADD PLAYER TO THE BOARD ***
   addElement(score, samePlayer);
@@ -460,7 +461,7 @@ function level2(samePlayer) {
       } else {
         addElement(lava, "lava");
       }
-    }, 3500);
+    }, 3000);
   }
   // ** STAGE 3 - GET TO ENTRANCE - WINNING **
   function win2() {
@@ -486,7 +487,7 @@ function level2(samePlayer) {
     progressBar.classList.remove("completelyDrunk");
     window.location.assign("./winnerPage.html");
   }
-
+  let direction = "right";
   function game2Timer() {
     let level2Timer = setInterval(() => {
       //** skull movement */
@@ -498,7 +499,6 @@ function level2(samePlayer) {
 
       const xPosition = skull % width;
       const yPosition = Math.floor(skull / width);
-      let direction = "right";
 
       function moveSkull() {
         switch (direction) {
@@ -546,27 +546,23 @@ function level2(samePlayer) {
         if (randomNumber === 0) {
           direction = "right";
           console.log(direction);
-          moveSkull();
         }
         if (randomNumber === 1) {
           direction = "down";
           console.log(direction);
-          moveSkull();
         }
         if (randomNumber === 2) {
           direction = "up";
           console.log(direction);
-          moveSkull();
         }
         if (randomNumber === 3) {
           direction = "left";
           console.log(direction);
-          moveSkull();
         }
       }
 
       //** collision with lava and skull */
-      if (player === lava) {
+      if (cells[player].classList.contains("lava")) {
         playSound("fire");
         pointsRemoved(10);
         anouncement.innerText = `OOOUCHH! Watch out for the lava! \n \nScore = ${score}`;
@@ -575,7 +571,7 @@ function level2(samePlayer) {
       if (player === skull) {
         playSound("skullLaugh");
         pointsRemoved(10);
-        anouncement.innerText = `MWAHAHAHAHAHA..\n \nscore = ${score}`;
+        anouncement.innerText = `MWAHA\nHAHA..\n \nscore = ${score}`;
         badGuy.src = "./images/skull.png";
       }
       //** MOVE SPEEDO STEVE */
