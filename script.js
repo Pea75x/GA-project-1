@@ -109,29 +109,6 @@ function treasure() {
   }, 200);
 }
 
-// ** STAGE 3 - GET TO ENTRANCE - WINNING **
-function win() {
-  anouncement.innerHTML = "Time to party!";
-  soundEffect.src = `./sounds/win.wav`;
-  soundEffect.play();
-  removeDrinks();
-  removeTrees();
-  removeElement(player, whichPlayer);
-  steveWalk.forEach((steve) => {
-    removeElement(steve, "speedoSteve");
-  });
-  raptorWalk.forEach((raptor) => {
-    removeElement(raptor, "raptor");
-  });
-  explorerWalk.forEach((explorer) => {
-    removeElement(explorer, "explorer");
-  });
-  davyWalk.forEach((davy) => {
-    removeElement(davy, "davy");
-  });
-  progressBar.classList.remove("completelyDrunk");
-  level2(whichPlayer);
-}
 // *** ADD TREES,JURRASIC ENTRANCE AND DRINKS**
 function addTrees() {
   trees.forEach((tree) => {
@@ -180,6 +157,8 @@ function removeDrinks() {
   removeElement(cocktail, "cocktail");
   removeElement(x, "x");
 }
+
+// ** WHAT HAPPENS WHEN YOU LOSE **
 function lose(howYouLost) {
   lostSection.style.display = "initial";
   pointsPanel.style.display = "none";
@@ -202,7 +181,7 @@ function pointsRemoved(points) {
   addElement(player, whichPlayer);
 }
 
-// ** set some stuff into the play game function to start the game when youre ready **
+// ** START LEVEL 1 **
 function playGame(event) {
   whichPlayer = event.target.className;
   pickPlease.style.display = "none";
@@ -329,6 +308,7 @@ function playGame(event) {
         speechBubble.innerText = mermaidText[m];
         m = 0;
       }
+      //** the next few lines dont work  */
       if (cells[player].classList.contains("openGates")) {
         speechBubble.innerHTML = "YAY you made it!";
         speechBubble.style.right = "45px";
@@ -339,8 +319,31 @@ function playGame(event) {
   mermaid();
   sufficientlyDrunk();
 
-  // **** SPEEDO STEVE MOVING ACROSS THE BOARD ******
-  // could put them all in a set interval together but then they would all move at the same speed?
+  // ** STAGE 3 - GET TO ENTRANCE - WINNING **
+  function win() {
+    anouncement.innerHTML = "Time to party!";
+    soundEffect.src = `./sounds/win.wav`;
+    soundEffect.play();
+    removeDrinks();
+    removeTrees();
+    removeElement(player, whichPlayer);
+    steveWalk.forEach((steve) => {
+      removeElement(steve, "speedoSteve");
+    });
+    raptorWalk.forEach((raptor) => {
+      removeElement(raptor, "raptor");
+    });
+    explorerWalk.forEach((explorer) => {
+      removeElement(explorer, "explorer");
+    });
+    davyWalk.forEach((davy) => {
+      removeElement(davy, "davy");
+    });
+    progressBar.classList.remove("completelyDrunk");
+    level2(whichPlayer);
+  }
+  // **** MOVING BADGUYS ACROSS THE BOARD ******
+  // Ive moved them all into the same set interval which is sad cos they now all go the same speed
   function gameTimer() {
     let badGuyTimer = setInterval(() => {
       //** MOVE SPEEDO STEVE */
@@ -421,8 +424,8 @@ function level2(samePlayer) {
   cocktail = [57];
   x = 91;
   trees = [
-    1, 11, 13, 24, 34, 33, 31, 51, 52, 55, 56, 47, 36, 38, 28, 17, 7, 78, 68,
-    58, 87, 76, 80, 81, 84, 73, 95,
+    1, 11, 13, 24, 34, 33, 31, 51, 52, 55, 47, 36, 38, 28, 17, 7, 78, 68, 58,
+    87, 76, 80, 81, 84, 73, 95,
   ];
   const lava = 72;
   raptorWalk = [19, 29, 39, 49, 59, 69, 79, 69, 59, 49, 39, 29, 19];
@@ -432,6 +435,10 @@ function level2(samePlayer) {
   e = 0;
   s = 0;
   dj = null;
+  let skull = 40;
+  mermaidText.push(
+    "You should never trust a volcano, they erupt to no good at all."
+  );
 
   // *** ADD PLAYER TO THE BOARD ***
   addElement(score, samePlayer);
@@ -453,17 +460,124 @@ function level2(samePlayer) {
       } else {
         addElement(lava, "lava");
       }
+    }, 3500);
+  }
+  // ** STAGE 3 - GET TO ENTRANCE - WINNING **
+  function win2() {
+    anouncement.innerHTML = "Time to party!";
+    soundEffect.src = `./sounds/win.wav`;
+    soundEffect.play();
+    removeDrinks();
+    removeTrees();
+    removeElement(player, samePlayer);
+    steveWalk.forEach((steve) => {
+      removeElement(steve, "speedoSteve");
+    });
+    raptorWalk.forEach((raptor) => {
+      removeElement(raptor, "raptor");
+    });
+    explorerWalk.forEach((explorer) => {
+      removeElement(explorer, "explorer");
+    });
+    davyWalk.forEach((davy) => {
+      removeElement(davy, "davy");
+    });
+    removeElement(skull, "skull");
+    progressBar.classList.remove("completelyDrunk");
+    window.location.assign("./winnerPage.html");
+  }
+
+  function game2Timer() {
+    let level2Timer = setInterval(() => {
+      //** skull movement */
+      function treeBash(futurePosition) {
+        return trees.includes(futurePosition);
+      }
+      // *** COLLISION DETECTION ***
+      addElement(skull, "skull");
+
+      const xPosition = skull % width;
+      const yPosition = Math.floor(skull / width);
+      let direction = "right";
+
+      function moveSkull() {
+        switch (direction) {
+          case "right":
+            if (xPosition < width - 1 && !treeBash(skull + 1)) {
+              removeElement(skull, "skull");
+              skull++;
+              addElement(skull, "skull");
+            } else {
+              changeDirection();
+            }
+            break;
+          case "down":
+            if (yPosition < width - 1 && !treeBash(skull + width)) {
+              removeElement(skull, "skull");
+              skull = skull + width;
+              addElement(skull, "skull");
+            } else {
+              changeDirection();
+            }
+            break;
+          case "up":
+            if (yPosition > 0 && !treeBash(skull - width)) {
+              removeElement(skull, "skull");
+              skull = skull - width;
+              addElement(skull, "skull");
+            } else {
+              changeDirection();
+            }
+            break;
+          case "left":
+            if (xPosition > 0 && !treeBash(skull - 1)) {
+              removeElement(skull, "skull");
+              skull = skull - 1;
+              addElement(skull, "skull");
+            } else {
+              changeDirection();
+            }
+        }
+      }
+      moveSkull();
+
+      function changeDirection() {
+        let randomNumber = Math.floor(Math.random() * 4);
+        if (randomNumber === 0) {
+          direction = "right";
+          console.log(direction);
+          moveSkull();
+        }
+        if (randomNumber === 1) {
+          direction = "down";
+          console.log(direction);
+          moveSkull();
+        }
+        if (randomNumber === 2) {
+          direction = "up";
+          console.log(direction);
+          moveSkull();
+        }
+        if (randomNumber === 3) {
+          direction = "left";
+          console.log(direction);
+          moveSkull();
+        }
+      }
+
+      //** collision with lava and skull */
       if (player === lava) {
         playSound("fire");
         pointsRemoved(10);
         anouncement.innerText = `OOOUCHH! Watch out for the lava! \n \nScore = ${score}`;
         badGuy.src = "./images/volcano.png";
       }
-    }, 3000);
-  }
-
-  function game2Timer() {
-    let level2Timer = setInterval(() => {
+      if (player === skull) {
+        playSound("skullLaugh");
+        pointsRemoved(10);
+        anouncement.innerText = `MWAHAHAHAHAHA..\n \nscore = ${score}`;
+        badGuy.src = "./images/skull.png";
+      }
       //** MOVE SPEEDO STEVE */
       if (s < steveWalk.length - 1) {
         // s < 8 - 1
@@ -511,7 +625,7 @@ function level2(samePlayer) {
       // ** STOPS THE GAME IF YOU WIN **
       if (cells[player].classList.contains("openGates")) {
         clearInterval(level2Timer);
-        win();
+        win2();
       }
     }, 500);
   }

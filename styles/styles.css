@@ -377,3 +377,7 @@ body {
   background-repeat: no-repeat;
   animation: pulse 1s ease infinite;
 }
+.skull {
+  background-image: url("../images/skull.png");
+  background-size: contain;
+}
