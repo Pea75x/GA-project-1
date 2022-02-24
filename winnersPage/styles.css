@@ -5,8 +5,140 @@
   text-align: center;
 }
 body {
-  background-image: url("../images/beachBackground.jpeg");
+  background-image: url("../images/beachBackground.jpg");
   background-repeat: no-repeat;
-  background-size: 80%;
-  margin: auto;
+  background-size: 100%;
+}
+h1 {
+  margin-top: 150px;
+  margin-bottom: 0;
+  font-size: 80px;
+}
+button {
+  border-radius: 5px;
+  padding: 15px 70px;
+  background-color: rgba(255, 255, 255, 0);
+  background-image: url("../images/banner.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+}
+button:hover {
+  transform: scale(1.1);
+}
+.palmTree {
+  position: absolute;
+  background-image: url("../images/palmTree3.png");
+  background-size: cover;
+  left: 0;
+  top: 0;
+  height: 500px;
+  width: 500px;
+}
+
+.beachBar {
+  position: absolute;
+  background-image: url("../images/beachBar.png");
+  height: 300px;
+  width: 300px;
+  background-size: cover;
+  right: 280px;
+  top: 50%;
+}
+.dinoPirate {
+  position: absolute;
+  background-image: url("../images/dinosaurPirate.png");
+  height: 400px;
+  width: 300px;
+  top: 270px;
+  background-size: cover;
+  animation: dance 1.5s ease infinite;
+}
+.pete {
+  position: absolute;
+  background-image: url("../images/pirate.png");
+  height: 350px;
+  width: 350px;
+  background-size: contain;
+  top: 350px;
+  left: 420px;
+  animation: dance 1s ease infinite;
+}
+.mermaid {
+  position: absolute;
+  background-image: url("../images/mermaid.png");
+  height: 300px;
+  width: 300px;
+  background-size: contain;
+  top: 400px;
+  left: 200px;
+  animation: dance 2s ease infinite;
+}
+.deadMan {
+  position: absolute;
+  background-image: url("../images/partypirate.png");
+  height: 260px;
+  width: 260px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 460px;
+  right: 100px;
+}
+.palmTree2 {
+  position: absolute;
+  background-image: url("../images/palmTree2.png");
+  background-size: cover;
+  right: 0;
+  bottom: 0;
+  height: 700px;
+  width: 500px;
+  transform: scaleX(-1);
+}
+@keyframes dance {
+  0% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(10deg);
+  }
+}
+.speedoSteve {
+  position: absolute;
+  background-image: url("../images/speedoSteve.png");
+  background-size: cover;
+  right: 450px;
+  top: 450px;
+  height: 200px;
+  width: 200px;
+}
+.ladyForSteve {
+  position: absolute;
+  background-image: url("../images/ladyForSteve.png");
+  background-size: cover;
+  right: 570px;
+  top: 460px;
+  height: 200px;
+  width: 80px;
+}
+.music {
+  position: absolute;
+  background-image: url("../images/music.png");
+  background-size: cover;
+  right: 620px;
+  top: 330px;
+  height: 90px;
+  width: 90px;
+  transform: rotate(10deg);
+}
+.beachball {
+  background-image: url("../images/beachball.png");
+  position: absolute;
+  background-size: cover;
+  height: 100px;
+  width: 100px;
+  top: 600px;
+  left: 200px;
 }

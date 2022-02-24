@@ -1,3 +1,6 @@
-const header = document.querySelector("h1");
+const button = document.querySelector("button");
 
-header.innerHTML = "YOU WON!";
+function startAgain() {
+  window.location.assign("./index.html");
+}
+button.addEventListener("click", startAgain);

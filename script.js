@@ -36,11 +36,11 @@ let raptorWalk = [28, 38, 48, 47, 46, 45, 46, 47, 48, 38, 28];
 let explorerWalk = [22, 12, 2, 3, 4, 5, 15, 25, 24, 23];
 let steveWalk = [68, 78, 88, 98, 97, 96, 95, 96, 97, 98, 88, 78, 68];
 let davyWalk = [60, 70, 80, 81, 82, 92, 93, 92, 82, 81, 80, 70, 60];
-let rum1 = [1, 2, 4, 5];
-let rum2 = [6, 16, 26, 25];
-let coconut = [3, 24, 23, 34];
+let rum1 = [50, 94, 55, 16];
+let rum2 = [34, 91, 99, 39];
+let coconut = [3, 86, 72, 30];
 let cocktail = [79];
-let x = [10];
+let x = [67];
 const mermaidText = [
   "Watch out for Speedo Steve! \nHis unwanted pervyness will sober you up!",
   "Dont let the Bouncer-Raptor catch you! \nHe will send you home!",
