@@ -1,11 +1,13 @@
+@import url('http://fonts.cdnfonts.com/css/treasure-map-deadland');
+
 * {
   box-sizing: border-box;
-  font-family: "Treasure Map Deadhand", sans-serif;
+  font-family: 'Treasure Map Deadhand', sans-serif;
   font-size: 40px;
   text-align: center;
 }
 body {
-  background-image: url("../images/beachBackground.jpg");
+  background-image: url('../images/beachBackground.jpg');
   background-repeat: no-repeat;
   background-size: 100%;
 }
@@ -18,7 +20,7 @@ button {
   border-radius: 5px;
   padding: 15px 70px;
   background-color: rgba(255, 255, 255, 0);
-  background-image: url("../images/banner.png");
+  background-image: url('../images/banner.png');
   background-size: contain;
   background-repeat: no-repeat;
   border: none;
@@ -28,7 +30,7 @@ button:hover {
 }
 .palmTree {
   position: absolute;
-  background-image: url("../images/palmTree3.png");
+  background-image: url('../images/palmTree3.png');
   background-size: cover;
   left: 0;
   top: 0;
@@ -38,7 +40,7 @@ button:hover {
 
 .beachBar {
   position: absolute;
-  background-image: url("../images/beachBar.png");
+  background-image: url('../images/beachBar.png');
   height: 300px;
   width: 300px;
   background-size: cover;
@@ -47,7 +49,7 @@ button:hover {
 }
 .dinoPirate {
   position: absolute;
-  background-image: url("../images/dinosaurPirate.png");
+  background-image: url('../images/dinosaurPirate.png');
   height: 400px;
   width: 300px;
   top: 270px;
@@ -56,7 +58,7 @@ button:hover {
 }
 .pete {
   position: absolute;
-  background-image: url("../images/pirate.png");
+  background-image: url('../images/pirate.png');
   height: 350px;
   width: 350px;
   background-size: contain;
@@ -66,7 +68,7 @@ button:hover {
 }
 .mermaid {
   position: absolute;
-  background-image: url("../images/mermaid.png");
+  background-image: url('../images/mermaid.png');
   height: 300px;
   width: 300px;
   background-size: contain;
@@ -76,7 +78,7 @@ button:hover {
 }
 .deadMan {
   position: absolute;
-  background-image: url("../images/partypirate.png");
+  background-image: url('../images/partypirate.png');
   height: 260px;
   width: 260px;
   background-size: contain;
@@ -86,7 +88,7 @@ button:hover {
 }
 .palmTree2 {
   position: absolute;
-  background-image: url("../images/palmTree2.png");
+  background-image: url('../images/palmTree2.png');
   background-size: cover;
   right: 0;
   bottom: 0;
@@ -107,7 +109,7 @@ button:hover {
 }
 .speedoSteve {
   position: absolute;
-  background-image: url("../images/speedoSteve.png");
+  background-image: url('../images/speedoSteve.png');
   background-size: cover;
   right: 450px;
   top: 450px;
@@ -116,7 +118,7 @@ button:hover {
 }
 .ladyForSteve {
   position: absolute;
-  background-image: url("../images/ladyForSteve.png");
+  background-image: url('../images/ladyForSteve.png');
   background-size: cover;
   right: 570px;
   top: 460px;
@@ -125,7 +127,7 @@ button:hover {
 }
 .music {
   position: absolute;
-  background-image: url("../images/music.png");
+  background-image: url('../images/music.png');
   background-size: cover;
   right: 620px;
   top: 330px;
@@ -134,7 +136,7 @@ button:hover {
   transform: rotate(10deg);
 }
 .beachball {
-  background-image: url("../images/beachball.png");
+  background-image: url('../images/beachball.png');
   position: absolute;
   background-size: cover;
   height: 100px;

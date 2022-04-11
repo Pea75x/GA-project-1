@@ -300,19 +300,13 @@ function playGame(event) {
 
   //** Mermaid speech */
   function mermaid() {
-    const mermaidSpeech = setInterval(() => {
+    setInterval(() => {
       if (m < mermaidText.length - 1) {
         speechBubble.innerText = mermaidText[m];
         m++;
       } else if ((m = mermaidText.length - 1)) {
         speechBubble.innerText = mermaidText[m];
         m = 0;
-      }
-      //** the next few lines dont work  */
-      if (cells[player].classList.contains("openGates")) {
-        speechBubble.innerHTML = "YAY you made it!";
-        speechBubble.style.right = "45px";
-        clearInterval(mermaidSpeech);
       }
     }, 5000);
   }
@@ -425,7 +419,7 @@ function level2(samePlayer) {
   x = 91;
   trees = [
     1, 11, 13, 24, 34, 33, 31, 51, 52, 55, 47, 36, 38, 28, 17, 7, 78, 68, 58,
-    87, 76, 80, 81, 84, 73, 95,
+    87, 76, 80, 70, 71, 84, 73, 95,
   ];
   const lava = 72;
   raptorWalk = [19, 29, 39, 49, 59, 69, 79, 69, 59, 49, 39, 29, 19];
@@ -436,6 +430,8 @@ function level2(samePlayer) {
   s = 0;
   dj = null;
   let skull = 40;
+  mermaidText.splice(2);
+  mermaidText.unshift("Another day, another party...");
   mermaidText.push(
     "You should never trust a volcano, they erupt to no good at all."
   );
@@ -545,19 +541,15 @@ function level2(samePlayer) {
         let randomNumber = Math.floor(Math.random() * 4);
         if (randomNumber === 0) {
           direction = "right";
-          console.log(direction);
         }
         if (randomNumber === 1) {
           direction = "down";
-          console.log(direction);
         }
         if (randomNumber === 2) {
           direction = "up";
-          console.log(direction);
         }
         if (randomNumber === 3) {
           direction = "left";
-          console.log(direction);
         }
       }
 
