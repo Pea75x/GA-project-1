@@ -117,7 +117,7 @@ In this example, if the skull is already going right it will keep going right un
 
 Using Math.random it randomly selects a number from 0 - 3 and is assigned a new direction this way.
 
-## Stage 3 - Winning the level
+## Winning the level
 
 We can workout if the user has made it to the open gates by using this simple function -
 
