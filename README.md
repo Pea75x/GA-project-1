@@ -43,55 +43,55 @@ I started by creating an event listener for "keyup" which activated the playerMo
 
 This first calculated where in the grid the player was on the x and y axis -
 
-```
- const xPosition = player % width;
- const yPosition = Math.floor(player / width);
+```javascript
+const xPosition = player % width;
+const yPosition = Math.floor(player / width);
 ```
 
 I then create an if function for each direction -
 
-```
-    //left
-    if (event.keyCode === 37) {
-      if (xPosition > 0 && !treeBash(player - 1)) {
-        removeElement(player, whichPlayer);
-        player--;
-        addElement(player, whichPlayer);
-      }
-    }
+```javascript
+//left
+if (event.keyCode === 37) {
+  if (xPosition > 0 && !treeBash(player - 1)) {
+    removeElement(player, whichPlayer);
+    player--;
+    addElement(player, whichPlayer);
+  }
+}
 ```
 
 If the user presses the left key, we remove the class from that position on the board, minus 1 from our position, and then add the class back to our position, provided we do not collide with the edge of our board (in this case xPosition > 0) or there are not any trees in the position we want to move to.
 
-```
- function treeBash(futurePosition) {
-    return trees.includes(futurePosition);
-  }
+```javascript
+function treeBash(futurePosition) {
+  return trees.includes(futurePosition);
+}
 ```
 
 ## Moving characters
 
 On the first level, all of the moving characters are on an array which moves them around the board in a set pattern within a set interval -
 
-```
+```javascript
 let raptorWalk = [28, 38, 48, 47, 46, 45, 46, 47, 48, 38, 28];
-r = 0
+r = 0;
 
- //** MOVE RAPTOR */
-      if (r < raptorWalk.length - 1) {
-        removeElement(raptorWalk[r], "raptor");
-        r++;
-        addElement(raptorWalk[r], "raptor");
-      } else {
-        removeElement(raptorWalk[r], "raptor");
-        r = 0;
-        addElement(raptorWalk[r], "raptor");
-      }
+//** MOVE RAPTOR */
+if (r < raptorWalk.length - 1) {
+  removeElement(raptorWalk[r], 'raptor');
+  r++;
+  addElement(raptorWalk[r], 'raptor');
+} else {
+  removeElement(raptorWalk[r], 'raptor');
+  r = 0;
+  addElement(raptorWalk[r], 'raptor');
+}
 ```
 
 In the next level I added a new character which can move in any direction on its own. This is done in a very similar way to Pete moving around the board -
 
-```
+```javascript
 let skull = 40;
 
           case "right":
@@ -107,7 +107,7 @@ let skull = 40;
 
 In this example, if the skull is already going right it will keep going right unless it detects a collision. In this case, it will change direction.
 
-```
+```javascript
       function changeDirection() {
         let randomNumber = Math.floor(Math.random() * 4);
         if (randomNumber === 0) {
@@ -121,11 +121,11 @@ Using Math.random it randomly selects a number from 0 - 3 and is assigned a new 
 
 We can workout if the user has made it to the open gates by using this simple function -
 
-```
-  if (cells[player].classList.contains("openGates")) {
-        clearInterval(badGuyTimer);
-        win();
-      }
+```javascript
+if (cells[player].classList.contains('openGates')) {
+  clearInterval(badGuyTimer);
+  win();
+}
 ```
 
 The win function clears everything from the board and starts the next level.
@@ -138,6 +138,10 @@ You can also stop the game when the drunkometer score goes below 0
 
 ## known bugs
 
+I did have trouble controlling the multiple set intervals. In level 2 you can notice this issue in certain cases, eg. If you do not move from the starting square and the skull (the character that can move randomly anywhere on the board) decides to go to the starting square. The skull now only has 1 direction to turn to get out of the starting square. You will instantly lose the game but the skull will still keep losing you points until it randomly generates the down direction. Although you cant see it, you can hear his laugh repeated over and over until you press play again.
+
+![skull-bug](./readme/skull-bug.gif)
+
 ## Future functionality
 
-If I had more time I would have liked to add a secret cave passage that you could walk into and come out on another place on the board. I think this would be quite easy to implement by adding an if function to the player movements.
+If I had more time I would have liked to add a secret cave passage that you could walk into and come out on another place on the board. I think this would be quite easy to implement by adding another if function to the player movements.
